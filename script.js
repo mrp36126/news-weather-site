@@ -62,32 +62,5 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchNews("us");
     }
 
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${openCageApiKey}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.results.length > 0) {
-                            const city = data.results[0].components.city || "Pretoria";
-                            fetchWeather(city);
-                            fetchNews("za");
-                            fetchNews("us");
-                        } else {
-                            fetchDefault();
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error fetching location data:", error);
-                        fetchDefault();
-                    });
-            },
-            () => {
-                fetchDefault();
-            }
-        );
-    } else {
-        fetchDefault();
-    }
+    fetchDefault();
 });
