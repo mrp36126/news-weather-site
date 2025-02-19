@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const OPENWEATHER_API_KEY = "0c47cd3fae85aaa9ae678aeda7dce305";
-    const NEWS_API_KEY = "bc0eaeb72bd84c7e8b5c9084fd979fba";
+    const NEWS_API_KEY = "00f830d4d3ab417f86dc71daea685c34";
     const OPENCAGE_API_KEY = "bc0eaeb72bd84c7e8b5c9084fd979fba";
     const city = "Pretoria";
     const country = "ZA";
