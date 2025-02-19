@@ -1,65 +1,105 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const OPENWEATHER_API_KEY = "0c47cd3fae85aaa9ae678aeda7dce305";
-    const NEWS_API_KEY = "bc0eaeb72bd84c7e8b5c9084fd979fba";
-    const OPENCAGE_API_KEY = "bc0eaeb72bd84c7e8b5c9084fd979fba";
-    const city = "Pretoria";
-    const country = "ZA";
-    
-    function fetchWeather() {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${OPENWEATHER_API_KEY}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("weather").innerHTML = `
-                    <h2>Weather Update (${city}, South Africa)</h2>
-                    <p>${data.weather[0].description}, ${data.main.temp}°C</p>
-                    <p>Humidity: ${data.main.humidity}% | Wind Speed: ${data.wind.speed} m/s</p>
-                `;
-            });
+    const weatherSection = document.getElementById("weather");
+    const newsSection = document.getElementById("news");
+    const apiKey = "0c47cd3fae85aaa9ae678aeda7dce305"; // OpenWeatherMap API Key
+    const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba"; // OpenCage API Key
+    const newsApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba"; // NewsAPI Key
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                
+                // Get city and country from OpenCage API
+                fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${openCageApiKey}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.results.length > 0) {
+                            const city = data.results[0].components.city || data.results[0].components.town || "Unknown";
+                            const country = data.results[0].components.country_code.toUpperCase();
+                            console.log("Detected City:", city, "Country:", country); // Debugging
+
+                            fetchWeather(city);
+                            fetchNews(country);
+                        } else {
+                            console.error("Location not found, using default.");
+                            fetchDefaultWeather();
+                            fetchDefaultNews();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching location:", error);
+                        fetchDefaultWeather();
+                        fetchDefaultNews();
+                    });
+            },
+            (error) => {
+                console.error("Geolocation error:", error);
+                weatherSection.innerHTML = "<p>Location access denied. Using default city.</p>";
+                fetchDefaultWeather();
+                fetchDefaultNews();
+            }
+        );
+    } else {
+        weatherSection.innerHTML = "<p>Geolocation not supported. Using default city.</p>";
+        fetchDefaultWeather();
+        fetchDefaultNews();
     }
 
-    function fetchForecast() {
-        fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&units=metric&appid=${OPENWEATHER_API_KEY}`)
-            .then(response => response.json())
-            .then(data => {
-                let forecastHtml = "<h3>7-Day Forecast</h3>";
-                for (let i = 0; i < data.list.length; i += 8) {
-                    let day = new Date(data.list[i].dt_txt).toDateString();
-                    forecastHtml += `<p>${day}: ${data.list[i].weather[0].description}, ${data.list[i].main.temp}°C</p>`;
-                }
-                document.getElementById("forecast").innerHTML = forecastHtml;
-            });
-    }
+    function fetchWeather(city) {
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
-    function fetchNews() {
-        fetch(`https://newsapi.org/v2/top-headlines?q=${city}&country=${country}&apiKey=${NEWS_API_KEY}`)
+        fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                let newsHtml = "";
-                data.articles.forEach(article => {
-                    newsHtml += `
-                        <div class="news-item">
-                            <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-                            <p>${article.description || "No description available."}</p>
-                        </div>
+                if (data.cod === 200) {
+                    const weatherInfo = `
+                        <p><strong>Location:</strong> ${data.name}, ${data.sys.country}</p>
+                        <p><strong>Temperature:</strong> ${data.main.temp}°C</p>
+                        <p><strong>Weather:</strong> ${data.weather[0].description}</p>
+                        <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
                     `;
-                });
-                document.getElementById("news-articles").innerHTML = newsHtml || "No news available.";
+                    weatherSection.innerHTML = weatherInfo;
+                } else {
+                    weatherSection.innerHTML = "<p>Weather data not available.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching weather data:", error);
+                weatherSection.innerHTML = "<p>Failed to load weather.</p>";
             });
     }
 
-    function fetchTimezones() {
-        const timezones = ["America/New_York", "Europe/London", "Asia/Tokyo", "Africa/Johannesburg"];
-        let timeHtml = "<h3>Global Time Zones</h3>";
-        timezones.forEach(zone => {
-            let time = new Date().toLocaleString("en-US", { timeZone: zone });
-            timeHtml += `<p>${zone}: ${time}</p>`;
-        });
-        document.getElementById("timezones").innerHTML = timeHtml;
+    function fetchNews(country) {
+        const apiUrl = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${newsApiKey}`;
+        
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "ok" && data.articles.length > 0) {
+                    let newsHtml = "<h2>Top News</h2>";
+                    data.articles.slice(0, 5).forEach(article => {
+                        newsHtml += `
+                            <p><strong>${article.title}</strong></p>
+                            <p><a href="${article.url}" target="_blank">Read more</a></p>
+                        `;
+                    });
+                    newsSection.innerHTML = newsHtml;
+                } else {
+                    newsSection.innerHTML = "<p>No news available.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching news:", error);
+                newsSection.innerHTML = "<p>Failed to load news.</p>";
+            });
     }
 
-    fetchWeather();
-    fetchForecast();
-    fetchNews();
-    fetchTimezones();
-    setInterval(fetchTimezones, 60000);
+    function fetchDefaultWeather() {
+        fetchWeather("Johannesburg");
+    }
+
+    function fetchDefaultNews() {
+        fetchNews("ZA");
+    }
 });
