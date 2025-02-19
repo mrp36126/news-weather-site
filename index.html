@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News & Weather</title>
     <link rel="stylesheet" href="style.css">
-<script type='text/javascript' src='https://assets.grok.com/nB8Lo1VZ_Tf29cNw1yghayRlgHVCi3WtWzXEhDbrhFN7O5NdmVk6knBA5F5LBnCHRVQIHYzu7rBa_3FVwtT5Wg=='></script></head>
+</head>
 <body>
     <header>
         <h1>News & Weather</h1>
     </header>
     <main>
-        <section id="weather">
-            <h2>Weather</h2>
-            <p>Loading...</p>
+        <section id="weather" role="region" aria-labelledby="weather-heading">
+            <h2 id="weather-heading">Weather</h2>
+            <p id="weather-loading">Loading...</p>
+            <div id="weather-content"></div>
         </section>
-        <section id="news">
-            <h2>Latest News</h2>
-            <p>Loading...</p>
+        <section id="news" role="region" aria-labelledby="news-heading">
+            <h2 id="news-heading">Latest News</h2>
+            <p id="news-loading">Loading...</p>
+            <div id="news-content"></div>
         </section>
     </main>
     <script src="script.js"></script>
