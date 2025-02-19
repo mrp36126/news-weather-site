@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News & Weather</title>
     <link rel="stylesheet" href="style.css">
+    <title>Weather & News App</title>
 </head>
 <body>
-    <header>
-        <h1>News & Weather</h1>
-    </header>
-    <main>
-        <section id="weather" role="region" aria-labelledby="weather-heading">
-            <h2 id="weather-heading">Weather</h2>
-            <p id="weather-loading">Loading...</p>
-            <div id="weather-content"></div>
-        </section>
-        <section id="news" role="region" aria-labelledby="news-heading">
-            <h2 id="news-heading">Latest News</h2>
-            <p id="news-loading">Loading...</p>
-            <div id="news-content"></div>
-        </section>
-    </main>
-    <script src="script.js"></script>
+<div class="container">
+    <h1>Weather & News App</h1>
+    
+    <div id="weather">
+        <p class="loading-message">Weather Loading...</p>
+        <!-- Weather data will be populated here -->
+    </div>
+
+    <div id="news">
+        <p class="loading-message">Latest News Loading...</p>
+        <!-- News articles will be populated here -->
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
+
