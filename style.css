@@ -1,8 +1,106 @@
-/* Existing CSS */
+/* Reset and set base styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
+body {
+  font-family: 'Arial', sans-serif;
+  background: #121212;  
+  color: #e0e0e0;       
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header styles */
+header {
+  background: linear-gradient(to right, #2c3e50, #4ca1af); 
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-family: 'Orbitron', 'Arial', sans-serif; 
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Main content styles */
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+}
+
+section {
+  background: rgba(255, 255, 255, 0.05); 
+  border-radius: 10px;
+  margin: 1rem 0;
+  padding: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transition: transform 0.3s;
+}
+
+section:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  color: #3498db;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+/* Loading text */
+#weather-loading, #news-loading {
+  font-style: italic;
+  color: #7f8c8d;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* Content styles */
+#weather-content, #news-content {
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+#weather-content p, #news-content p {
+  margin: 0.5rem 0;
+}
+
+#news-content a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+#news-content a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Weather image styling */
 .weather-visual {
-    max-width: 100%;
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .earth-weather {
@@ -11,12 +109,13 @@
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
-    opacity: 0.9; /* Slight transparency for futuristic effect */
+    object-fit: cover;
+    opacity: 0.9;
 }
 
 .earth-weather:hover {
     transform: scale(1.02);
-    opacity: 1; /* Full opacity on hover */
+    opacity: 1;
 }
 
 /* Adjust the weather section to accommodate the image */
@@ -27,21 +126,21 @@
 }
 
 #weather h2, #weather-loading, #weather-content {
-    width: 100%; /* Ensure text elements span full width */
+    width: 100%;
 }
 
-/* Responsive adjustments */
+/* Responsive design */
 @media (min-width: 768px) {
-    main {
-        flex-direction: row;
-        justify-content: space-around;
-    }
+  main {
+    flex-direction: row;
+    justify-content: space-around;
+  }
 
-    #weather {
-        width: 45%;
-    }
+  #weather, #news {
+    width: 45%;
+  }
 
-    #news {
-        width: 45%;
-    }
+  .weather-visual {
+    max-height: 250px; 
+  }
 }
