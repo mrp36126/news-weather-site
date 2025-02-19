@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hardcoded API Keys
     const apiKey = "0c47cd3fae85aaa9ae678aeda7dce305"; // OpenWeatherMap API Key
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba"; // OpenCage API Key
-    const newsApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba"; // NewsAPI Key
+    const newsApiKey = "00f830d4d3ab417f86dc71daea685c34"; // Updated NewsAPI Key
 
     if ("geolocation" in navigator) {
         navigator.permissions.query({name:'geolocation'}).then(result => {
