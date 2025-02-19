@@ -11,7 +11,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             color: white;
-            background: url('https://source.unsplash.com/1600x900/?earth,space') no-repeat center center fixed;
+            background: url('https://source.unsplash.com/1600x900/?earth,space,galaxy') no-repeat center center fixed;
             background-size: cover;
             text-align: center;
         }
@@ -51,6 +51,10 @@
             padding: 10px;
             background: rgba(0, 0, 0, 0.8);
         }
+        .forecast {
+            margin-top: 20px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -64,6 +68,10 @@
         <section class="weather" id="weather">
             <h2>Weather Update</h2>
             <p>Loading weather...</p>
+            <div class="forecast" id="forecast">
+                <h3>7-Day Forecast</h3>
+                <p>Loading forecast...</p>
+            </div>
         </section>
         <section class="news" id="news">
             <h2>Latest News</h2>
@@ -75,3 +83,4 @@
     </footer>
 </body>
 </html>
+
