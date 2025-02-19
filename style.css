@@ -7,8 +7,8 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background: #121212;  
-  color: #e0e0e0;       
+  background: #121212;  /* Dark background for futuristic feel */
+  color: #e0e0e0;       /* Light text on dark background */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -17,15 +17,15 @@ body {
 
 /* Header styles */
 header {
-  background: linear-gradient(to right, #2c3e50, #4ca1af); 
+  background: linear-gradient(to right, #2c3e50, #4ca1af); /* Gradient for depth */
   color: white;
   text-align: center;
   padding: 1rem 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow for lift */
 }
 
 header h1 {
-  font-family: 'Orbitron', 'Arial', sans-serif; 
+  font-family: 'Orbitron', 'Arial', sans-serif; /* Futuristic font if available */
   text-transform: uppercase;
   letter-spacing: 2px;
 }
@@ -39,16 +39,16 @@ main {
 }
 
 section {
-  background: rgba(255, 255, 255, 0.05); 
+  background: rgba(255, 255, 255, 0.05); /* Semi-transparent white for contrast */
   border-radius: 10px;
   margin: 1rem 0;
   padding: 1.5rem;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); /* Futuristic shadow */
   transition: transform 0.3s;
 }
 
 section:hover {
-  transform: translateY(-5px);
+  transform: translateY(-5px); /* Lift effect on hover */
 }
 
 h2 {
@@ -92,43 +92,6 @@ h2 {
   text-decoration: underline;
 }
 
-/* Weather image styling */
-.weather-visual {
-    width: 100%;
-    max-height: 200px;
-    overflow: hidden;
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.earth-weather {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-    object-fit: cover;
-    opacity: 0.9;
-}
-
-.earth-weather:hover {
-    transform: scale(1.02);
-    opacity: 1;
-}
-
-/* Adjust the weather section to accommodate the image */
-#weather {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#weather h2, #weather-loading, #weather-content {
-    width: 100%;
-}
-
 /* Responsive design */
 @media (min-width: 768px) {
   main {
@@ -136,11 +99,7 @@ h2 {
     justify-content: space-around;
   }
 
-  #weather, #news {
+  section {
     width: 45%;
-  }
-
-  .weather-visual {
-    max-height: 250px; 
   }
 }
