@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Poppins', Arial, sans-serif;
-    background: url('Road3.jpg') no-repeat center center fixed; /* Full page background */
+    background: url('Road3.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #333;
     line-height: 1.6;
@@ -19,7 +19,7 @@ header {
     background: url('Road3.jpg') no-repeat center center;
     background-size: cover;
     position: relative;
-    padding: 10px 0;
+    padding: 15px 0; /* Slightly more padding for balance */
     text-align: center;
 }
 
@@ -30,20 +30,31 @@ header::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)); /* Gradient overlay */
     z-index: 1;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Thin accent line */
+    background: #ff4500; /* Orange-red accent (adjustable) */
+    z-index: 2;
 }
 
 header h1 {
     font-family: 'Times New Roman', serif;
-    font-size: 2.5rem;
+    font-size: 2.8rem; /* Slightly larger for impact */
     font-weight: bold;
     margin: 0;
     line-height: 1.2;
     color: #ffffff;
     position: relative;
     z-index: 2;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
 }
 
 /* Main Layout */
@@ -170,7 +181,7 @@ main {
 #news-content a {
     color: #333;
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: color 0.3s ease;
 }
 
 #news-content a:hover {
