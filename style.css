@@ -1,81 +1,122 @@
-body {
-    font-family: 'Poppins', Arial, sans-serif;
+/* Reset and Base Styles */
+* {
     margin: 0;
-    padding: 20px;
-    background: linear-gradient(135deg, #d3d3d3, #a9a9a9);
-    color: #333;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-header {
-    background: #000000;
-    color: #ffffff;
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(135deg, #e0e0e0, #b0b0b0); /* Softer gray gradient */
+    color: #333;
+    line-height: 1.6;
     padding: 20px;
+}
+
+/* Header */
+header {
+    background: #1a1a1a; /* Darker gray-black */
+    color: #ffffff;
+    padding: 1.5rem;
     text-align: center;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5em;
-    font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
+/* Main Layout */
 main {
+    max-width: 1200px;
+    margin: 2rem auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 20px auto;
+    gap: 2rem;
 }
 
-section {
+/* Card Styling */
+.card {
     background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-h2 {
-    color: #333333;
-    margin-top: 0;
-    font-weight: 500;
+.card h2 {
+    color: #2a2a2a; /* Darker gray */
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #d0d0d0; /* Light gray underline */
+    padding-bottom: 0.5rem;
 }
 
-p {
-    line-height: 1.6;
-    margin: 10px 0;
-    color: #555555;
+/* Weather and News Content */
+#weather-content p, #news-content p {
+    color: #555;
+    font-size: 1.1rem;
+    margin: 0.75rem 0;
+}
+
+#weather-content p strong, #news-content p strong {
+    color: #333;
+    font-weight: 600;
+}
+
+#news-content a {
+    color: #4a4a4a; /* Medium gray */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+#news-content a:hover {
+    color: #1a1a1a; /* Darker on hover */
+    text-decoration: underline;
+}
+
+/* Controls (Dropdowns) */
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 select {
-    padding: 8px;
-    margin: 10px 5px;
-    border: 2px solid #333333;
-    border-radius: 5px;
-    font-size: 1em;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 2px solid #4a4a4a;
+    border-radius: 8px;
+    background: #f8f8f8; /* Very light gray */
+    color: #333;
     cursor: pointer;
-    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    flex: 1; /* Equal width for both dropdowns */
+}
+
+select:hover, select:focus {
+    border-color: #1a1a1a;
     background: #ffffff;
-    color: #333333;
+    outline: none;
 }
 
-select:hover {
-    background: #f5f5f5;
-}
-
-#news-content {
-    margin-top: 10px;
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }
