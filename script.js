@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const weatherSection = document.getElementById("weather");
-    const weatherContent = document.getElementById("weather-content"); // New target
+    const weatherContent = document.getElementById("weather-content");
     const newsSection = document.getElementById("news");
     const newsContent = document.getElementById("news-content");
     const newsCountry = document.getElementById("news-country");
@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function fetchWeatherForecast(city) {
         const apiUrl = `/weather/forecast?q=${city}&units=metric&appid=${weatherApiKey}`;
         console.log("Fetching weather for:", city);
+        weatherContent.innerHTML = '<div class="spinner"></div>';
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
@@ -71,10 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     dailyData.forEach(day => {
                         const date = new Date(day.dt * 1000).toLocaleDateString();
                         forecastHtml += `
-                            <p><strong>${date}:</strong> ${day.main.temp}°C, ${day.weather[0].description}</p>
+                            <p><strong>${date}:</strong> ${day.main.temp}°C, ${day.weather[0].description}
+                            <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" alt="${day.weather[0].description}" class="weather-icon"></p>
                         `;
                     });
-                    weatherContent.innerHTML = forecastHtml; // Target content div
+                    weatherContent.innerHTML = forecastHtml;
                 } else {
                     weatherContent.innerHTML = "<p>Weather data not available.</p>";
                 }
@@ -88,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function fetchNews(country, category) {
         const apiUrl = `/news/top-headlines?country=${country}&category=${category}&apiKey=${newsApiKey}`;
         console.log("Fetching news for:", country, category);
+        newsContent.innerHTML = '<div class="spinner"></div>';
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -97,9 +100,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (data.status === "ok" && data.articles.length > 0) {
                     let newsHtml = `<h2>Top ${category.charAt(0).toUpperCase() + category.slice(1)} News</h2>`;
                     data.articles.slice(0, 5).forEach(article => {
+                        const thumb = article.urlToImage ? `<img src="${article.urlToImage}" alt="thumbnail" class="news-thumb">` : '';
                         newsHtml += `
-                            <p><strong>${article.title}</strong></p>
-                            <p><a href="${article.url}" target="_blank">Read more</a></p>
+                            <div class="news-item">
+                                ${thumb}
+                                <p><strong>${article.title}</strong></p>
+                                <p><a href="${article.url}" target="_blank">Read more</a></p>
+                            </div>
                         `;
                     });
                     newsContent.innerHTML = newsHtml;
