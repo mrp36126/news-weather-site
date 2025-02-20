@@ -5,32 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News & Weather</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <h1>News & Weather</h1>
     </header>
     <main>
-        <section id="weather">
+        <section id="weather" class="card">
             <h2>Weather Forecast</h2>
-            <p>Loading weather...</p>
+            <div id="weather-content">
+                <p>Loading weather...</p>
+            </div>
         </section>
-        <section id="news">
+        <section id="news" class="card">
             <h2>Latest News</h2>
-            <select id="news-country">
-                <option value="us">United States</option>
-                <option value="gb">United Kingdom</option>
-                <option value="ca">Canada</option>
-                <option value="au">Australia</option>
-                <option value="za">South Africa</option>
-            </select>
-            <select id="news-category">
-                <option value="general">General</option>
-                <option value="sports">Sports</option>
-                <option value="technology">Technology</option>
-                <option value="business">Business</option>
-            </select>
-            <div id="news-content"><p>Loading news...</p></div> <!-- Separate container for news -->
+            <div class="controls">
+                <select id="news-country">
+                    <option value="us">United States</option>
+                    <option value="gb">United Kingdom</option>
+                    <option value="ca">Canada</option>
+                    <option value="au">Australia</option>
+                    <option value="za">South Africa</option>
+                </select>
+                <select id="news-category">
+                    <option value="general">General</option>
+                    <option value="sports">Sports</option>
+                    <option value="technology">Technology</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
+            <div id="news-content">
+                <p>Loading news...</p>
+            </div>
         </section>
     </main>
     <script src="script.js"></script>
