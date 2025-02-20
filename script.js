@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newsCategory = document.getElementById("news-category");
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
-    const newsApiKey = "00f830d4d3ab417f86dc71daea685c34";
+    const newsApiKey = "cd0036d802097242c095659ca9f8873b"; // Your GNews API key
 
     console.log("DOM loaded, initializing...");
 
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function fetchNews(country, category) {
-        const apiUrl = `/news/top-headlines?country=${country}&category=${category}&apiKey=${newsApiKey}`;
+        const apiUrl = `/news/top-headlines?q=${category}&country=${country}&lang=en&token=${newsApiKey}`;
         console.log("Fetching news with URL:", apiUrl);
         newsContent.innerHTML = '<div class="spinner"></div>';
         fetch(apiUrl)
@@ -100,11 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                console.log("News API response:", data);
-                if (data.status === "ok" && data.articles && data.articles.length > 0) {
+                console.log("GNews API response:", data);
+                if (data.articles && data.articles.length > 0) {
                     let newsHtml = `<h2>Top ${category.charAt(0).toUpperCase() + category.slice(1)} News</h2>`;
                     data.articles.slice(0, 5).forEach(article => {
-                        const thumb = article.urlToImage ? `<img src="${article.urlToImage}" alt="thumbnail" class="news-thumb">` : '';
+                        const thumb = article.image ? `<img src="${article.image}" alt="thumbnail" class="news-thumb">` : '';
                         newsHtml += `
                             <div class="news-item">
                                 ${thumb}
@@ -115,7 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     newsContent.innerHTML = newsHtml;
                 } else {
-                    newsContent.innerHTML = "<p>No news available for this selection.</p>";
+                    console.log(`No articles found for country: ${country}, category: ${category}`);
+                    newsContent.innerHTML = "<p>No news available for this country and category combination.</p>";
                 }
             })
             .catch(error => {
