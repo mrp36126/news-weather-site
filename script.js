@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const weatherSection = document.getElementById("weather");
+    const weatherContent = document.getElementById("weather-content"); // New target
     const newsSection = document.getElementById("news");
     const newsContent = document.getElementById("news-content");
     const newsCountry = document.getElementById("news-country");
@@ -37,14 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             (error) => {
                 console.error("Geolocation error:", error);
-                weatherSection.innerHTML = "<p>Location access denied. Using default.</p>";
+                weatherContent.innerHTML = "<p>Location access denied. Using default.</p>";
                 fetchDefaultWeather();
                 fetchDefaultNews();
             }
         );
     } else {
         console.log("Geolocation not supported");
-        weatherSection.innerHTML = "<p>Geolocation not supported. Using default.</p>";
+        weatherContent.innerHTML = "<p>Geolocation not supported. Using default.</p>";
         fetchDefaultWeather();
         fetchDefaultNews();
     }
@@ -73,14 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
                             <p><strong>${date}:</strong> ${day.main.temp}°C, ${day.weather[0].description}</p>
                         `;
                     });
-                    weatherSection.innerHTML = forecastHtml;
+                    weatherContent.innerHTML = forecastHtml; // Target content div
                 } else {
-                    weatherSection.innerHTML = "<p>Weather data not available.</p>";
+                    weatherContent.innerHTML = "<p>Weather data not available.</p>";
                 }
             })
             .catch(error => {
                 console.error("Error fetching forecast:", error);
-                weatherSection.innerHTML = "<p>Failed to load forecast.</p>";
+                weatherContent.innerHTML = "<p>Failed to load forecast.</p>";
             });
     }
 
