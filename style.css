@@ -15,18 +15,19 @@ body {
 
 /* Header */
 header {
-    background: #1a1a1a;
-    color: #ffffff;
-    padding: 1.5rem;
+    background: #ffffff; /* White background like NYT */
+    color: #000000; /* Black text */
+    padding: 10px 0; /* Reduced padding for compactness */
     text-align: center;
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid #cccccc; /* Thin grey border */
 }
 
 header h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-family: 'Times New Roman', serif; /* Serif font like NYT */
+    font-size: 2.5rem; /* Matches NYT’s prominence */
+    font-weight: bold; /* Bold like NYT */
+    margin: 0;
+    line-height: 1.2;
 }
 
 /* Main Layout */
@@ -111,11 +112,11 @@ main {
 }
 
 #weather.card h2 {
-    color: #333; /* Weather dark grey */
+    color: #333;
 }
 
 #news.card h2 {
-    color: #333; /* News dark grey */
+    color: #333;
 }
 
 /* Weather and News Content */
@@ -139,7 +140,7 @@ main {
 }
 
 #news-content p {
-    color: #333; /* Dark grey for news tile */
+    color: #333;
     font-size: 1.1rem;
     margin: 0.75rem 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -151,13 +152,13 @@ main {
 }
 
 #news-content a {
-    color: #333; /* Dark grey links */
+    color: #333;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 #news-content a:hover {
-    color: #1a1a1a; /* Darker grey on hover */
+    color: #1a1a1a;
     text-decoration: underline;
 }
 
@@ -227,5 +228,9 @@ select:hover, select:focus {
     .news-thumb {
         width: 60px;
         height: 60px;
+    }
+
+    header h1 {
+        font-size: 2rem; /* Slightly smaller on mobile */
     }
 }
