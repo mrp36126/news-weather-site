@@ -51,11 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     newsCountry.addEventListener("change", () => {
-        console.log("Country changed to:", newsCountry.value);
+        console.log("Country dropdown changed to:", newsCountry.value);
         fetchNews(newsCountry.value, newsCategory.value);
     });
+
     newsCategory.addEventListener("change", () => {
-        console.log("Category changed to:", newsCategory.value);
+        console.log("Category dropdown changed to:", newsCategory.value);
         fetchNews(newsCountry.value, newsCategory.value);
     });
 
@@ -89,15 +90,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function fetchNews(country, category) {
         const apiUrl = `/news/top-headlines?country=${country}&category=${category}&apiKey=${newsApiKey}`;
-        console.log("Fetching news for:", country, category);
+        console.log("Fetching news with URL:", apiUrl);
         newsContent.innerHTML = '<div class="spinner"></div>';
         fetch(apiUrl)
             .then(response => {
-                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
                 return response.json();
             })
             .then(data => {
-                if (data.status === "ok" && data.articles.length > 0) {
+                console.log("News API response:", data);
+                if (data.status === "ok" && data.articles && data.articles.length > 0) {
                     let newsHtml = `<h2>Top ${category.charAt(0).toUpperCase() + category.slice(1)} News</h2>`;
                     data.articles.slice(0, 5).forEach(article => {
                         const thumb = article.urlToImage ? `<img src="${article.urlToImage}" alt="thumbnail" class="news-thumb">` : '';
@@ -115,8 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
             .catch(error => {
-                console.error("Error fetching news:", error);
-                newsContent.innerHTML = "<p>Failed to load news. Check API key or network.</p>";
+                console.error("Error fetching news:", error.message);
+                newsContent.innerHTML = `<p>Failed to load news: ${error.message}</p>`;
             });
     }
 
