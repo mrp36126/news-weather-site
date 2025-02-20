@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const weatherSection = document.getElementById("weather");
     const newsSection = document.getElementById("news");
+    const newsCountry = document.getElementById("news-country");
     const newsCategory = document.getElementById("news-category");
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305"; // OpenWeatherMap
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba"; // OpenCage
-    const newsApiKey = "00f830d4d3ab417f86dc71daea685c34"; // NewsAPI key
+    const newsApiKey = "00f830d4d3ab417f86dc71daea685c34"; // Updated NewsAPI key
 
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
@@ -15,9 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     .then(data => {
                         if (data.results.length > 0) {
                             const city = data.results[0].components.city || data.results[0].components.town || "Unknown";
-                            const country = data.results[0].components.country_code.toUpperCase();
                             fetchWeatherForecast(city);
-                            fetchNews(country, newsCategory.value);
+                            fetchNews(newsCountry.value, newsCategory.value); // Use dropdown value initially
                         } else {
                             fetchDefaultWeather();
                             fetchDefaultNews();
@@ -42,9 +42,12 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchDefaultNews();
     }
 
-    // Update news when category changes
+    // Update news when country or category changes
+    newsCountry.addEventListener("change", () => {
+        fetchNews(newsCountry.value, newsCategory.value);
+    });
     newsCategory.addEventListener("change", () => {
-        fetchNews(getCountryFromWeather(), newsCategory.value);
+        fetchNews(newsCountry.value, newsCategory.value);
     });
 
     function fetchWeatherForecast(city) {
@@ -54,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 if (data.cod === "200") {
                     let forecastHtml = `<p><strong>Location:</strong> ${data.city.name}, ${data.city.country}</p>`;
-                    // Show next 3 days (every 24 hours)
                     const dailyData = data.list.filter((_, index) => index % 8 === 0).slice(0, 3);
                     dailyData.forEach(day => {
                         const date = new Date(day.dt * 1000).toLocaleDateString();
@@ -76,7 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function fetchNews(country, category) {
         const apiUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${newsApiKey}`;
         fetch(apiUrl)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json();
+            })
             .then(data => {
                 if (data.status === "ok" && data.articles.length > 0) {
                     let newsHtml = `<h2>Top ${category.charAt(0).toUpperCase() + category.slice(1)} News</h2>`;
@@ -88,18 +93,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     newsSection.innerHTML = newsHtml;
                 } else {
-                    newsSection.innerHTML = "<p>No news available for this category.</p>";
+                    newsSection.innerHTML = "<p>No news available for this selection.</p>";
                 }
             })
             .catch(error => {
                 console.error("Error fetching news:", error);
-                newsSection.innerHTML = "<p>Failed to load news.</p>";
+                newsSection.innerHTML = "<p>Failed to load news. Check API key or network.</p>";
             });
-    }
-
-    function getCountryFromWeather() {
-        const locationText = weatherSection.querySelector("p")?.textContent;
-        return locationText?.match(/, ([A-Z]{2})/)?.[1] || "ZA";
     }
 
     function fetchDefaultWeather() {
@@ -107,6 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function fetchDefaultNews() {
-        fetchNews("ZA", newsCategory.value);
+        fetchNews(newsCountry.value, newsCategory.value); // Use dropdown defaults
     }
 });
