@@ -1,24 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
     const weatherSection = document.getElementById("weather");
     const newsSection = document.getElementById("news");
+    const newsContent = document.getElementById("news-content"); // New target
     const newsCountry = document.getElementById("news-country");
     const newsCategory = document.getElementById("news-category");
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305"; // OpenWeatherMap
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba"; // OpenCage
-    const newsApiKey = "00f830d4d3ab417f86dc71daea685c34"; // Updated NewsAPI key
+    const newsApiKey = "00f830d4d3ab417f86dc71daea685c34"; // NewsAPI key
+
+    console.log("DOM loaded, initializing...");
 
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
+                console.log("Geolocation success:", latitude, longitude);
                 fetch(`https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${openCageApiKey}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.results.length > 0) {
                             const city = data.results[0].components.city || data.results[0].components.town || "Unknown";
+                            console.log("City detected:", city);
                             fetchWeatherForecast(city);
-                            fetchNews(newsCountry.value, newsCategory.value); // Use dropdown value initially
+                            fetchNews(newsCountry.value, newsCategory.value);
                         } else {
+                            console.log("No location results, using defaults");
                             fetchDefaultWeather();
                             fetchDefaultNews();
                         }
@@ -37,21 +43,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     } else {
+        console.log("Geolocation not supported");
         weatherSection.innerHTML = "<p>Geolocation not supported. Using default.</p>";
         fetchDefaultWeather();
         fetchDefaultNews();
     }
 
-    // Update news when country or category changes
     newsCountry.addEventListener("change", () => {
+        console.log("Country changed to:", newsCountry.value);
         fetchNews(newsCountry.value, newsCategory.value);
     });
     newsCategory.addEventListener("change", () => {
+        console.log("Category changed to:", newsCategory.value);
         fetchNews(newsCountry.value, newsCategory.value);
     });
 
     function fetchWeatherForecast(city) {
         const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${weatherApiKey}`;
+        console.log("Fetching weather for:", city);
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
@@ -77,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function fetchNews(country, category) {
         const apiUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${newsApiKey}`;
+        console.log("Fetching news for:", country, category);
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -91,21 +101,27 @@ document.addEventListener("DOMContentLoaded", () => {
                             <p><a href="${article.url}" target="_blank">Read more</a></p>
                         `;
                     });
-                    newsSection.innerHTML = newsHtml;
+                    newsContent.innerHTML = newsHtml; // Update only the content div
                 } else {
-                    newsSection.innerHTML = "<p>No news available for this selection.</p>";
+                    newsContent.innerHTML = "<p>No news available for this selection.</p>";
                 }
             })
             .catch(error => {
                 console.error("Error fetching news:", error);
-                newsSection.innerHTML = "<p>Failed to load news. Check API key or network.</p>";
+                newsContent.innerHTML = "<p>Failed to load news. Check API key or network.</p>";
             });
     }
 
     function fetchDefaultWeather() {
+        console.log("Fetching default weather");
         fetchWeatherForecast("Johannesburg");
     }
 
+    function fetchDefaultNews() {
+        console.log("Fetching default news");
+        fetchNews(newsCountry.value, newsCategory.value);
+    }
+});
     function fetchDefaultNews() {
         fetchNews(newsCountry.value, newsCategory.value); // Use dropdown defaults
     }
