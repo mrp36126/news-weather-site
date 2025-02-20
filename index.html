@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
+    <title>News & Weather</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="weather">Weather Loading...</div>
-    <div id="news">Latest News Loading...</div>
+    <header>
+        <h1>News & Weather</h1>
+    </header>
+    <main>
+        <section id="weather">
+            <h2>Weather Forecast</h2>
+            <p>Loading weather...</p>
+        </section>
+        <section id="news">
+            <h2>Latest News</h2>
+            <select id="news-category">
+                <option value="general">General</option>
+                <option value="sports">Sports</option>
+                <option value="technology">Technology</option>
+                <option value="business">Business</option>
+            </select>
+            <p>Loading news...</p>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
