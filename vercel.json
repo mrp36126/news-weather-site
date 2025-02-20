@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/weather/:path*",
+      "destination": "https://api.openweathermap.org/data/2.5/:path*"
+    },
+    {
+      "source": "/news/:path*",
+      "destination": "https://newsapi.org/v2/:path*"
+    },
+    {
+      "source": "/geocode/:path*",
+      "destination": "https://api.opencagedata.com/geocode/v1/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
