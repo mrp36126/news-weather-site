@@ -45,6 +45,7 @@ main {
     padding: 1.5rem;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* For positioning the image */
 }
 
 .card:hover {
@@ -59,6 +60,17 @@ main {
     margin-bottom: 1rem;
     border-bottom: 2px solid #d0d0d0;
     padding-bottom: 0.5rem;
+}
+
+/* Weather Background Image */
+.weather-bg {
+    width: 100%;
+    max-width: 200px; /* Adjust size as needed */
+    height: auto;
+    display: block;
+    margin: 0 auto 1rem;
+    opacity: 0.9; /* Slight transparency for elegance */
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2)); /* Subtle shadow */
 }
 
 /* Weather and News Content */
@@ -81,7 +93,7 @@ main {
 }
 
 #news-content a {
-    color: #666; /* Muted gray accent */
+    color: #666;
     text-decoration: none;
     transition: color 0.2s ease;
 }
@@ -155,5 +167,9 @@ select:hover, select:focus {
     .news-thumb {
         width: 60px;
         height: 60px;
+    }
+
+    .weather-bg {
+        max-width: 150px; /* Smaller on mobile */
     }
 }
