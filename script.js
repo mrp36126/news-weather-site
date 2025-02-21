@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Fetching UFC events with URL:", apiUrl);
         ufcContent.innerHTML = '<div class="spinner"></div>';
         fetch(apiUrl, {
+            method: 'GET',
             headers: {
                 "X-RapidAPI-Key": ufcApiKey,
                 "X-RapidAPI-Host": "ufc-data1.p.rapidapi.com"
@@ -192,14 +193,17 @@ document.addEventListener("DOMContentLoaded", () => {
         })
             .then(response => {
                 console.log("UFC fetch response status:", response.status);
+                console.log("UFC fetch response headers:", response.headers);
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    return response.text().then(text => {
+                        throw new Error(`HTTP error! Status: ${response.status}, Response: ${text}`);
+                    });
                 }
                 return response.json();
             })
             .then(data => {
                 console.log("UFC API raw response:", JSON.stringify(data, null, 2));
-                const events = data || []; // Adjust based on actual response structure
+                const events = data?.results || data || []; // Adjust based on actual structure
                 console.log("Parsed events array:", events);
                 if (events.length > 0) {
                     let ufcHtml = `<h2>Recent UFC Events</h2>`;
