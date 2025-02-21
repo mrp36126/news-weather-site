@@ -138,18 +138,20 @@ document.addEventListener("DOMContentLoaded", () => {
         f1Content.innerHTML = '<div class="spinner"></div>';
         fetch(apiUrl)
             .then(response => {
+                console.log("Fetch response status:", response.status);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(data => {
-                console.log("Ergast API full response:", data);
-                const races = data.MRData.RaceTable.Races;
-                if (races && races.length > 0) {
+                console.log("Ergast API raw response:", JSON.stringify(data, null, 2));
+                const races = data?.MRData?.RaceTable?.Races || [];
+                console.log("Parsed races array:", races);
+                if (races.length > 0) {
                     let f1Html = `<h2>F1 2025 Schedule</h2>`;
-                    races.slice(0, 5).forEach(race => { // First 5 races of 2025
-                        const raceDate = new Date(race.date + 'T' + race.time).toLocaleString();
+                    races.slice(0, 5).forEach(race => {
+                        const raceDate = new Date(race.date + 'T' + (race.time || '00:00Z')).toLocaleString();
                         f1Html += `
                             <div class="f1-item">
                                 <p><strong>${race.raceName}</strong></p>
@@ -160,8 +162,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                     f1Content.innerHTML = f1Html;
                 } else {
-                    console.log("No races found for 2025 season");
-                    f1Content.innerHTML = "<p>No F1 race data available.</p>";
+                    console.log("No races found in response");
+                    f1Content.innerHTML = "<p>No F1 race data available for 2025.</p>";
                 }
             })
             .catch(error => {
