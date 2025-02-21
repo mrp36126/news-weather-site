@@ -7,37 +7,20 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: url('Road3.jpg') no-repeat center center fixed;
+    background: url('Road3.jpg') no-repeat center center fixed; /* Full image, no overlay */
     background-size: cover;
     color: #333;
     line-height: 1.6;
-    position: relative;
-}
-
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.5);
-    z-index: -1;
 }
 
 /* Header */
 header {
-    background: transparent; /* 100% transparent */
+    background: transparent; /* Fully transparent */
     padding: 15px 20px;
     text-align: center;
-    position: fixed; /* Stays at top */
-    top: 0;
-    left: 0;
+    position: relative; /* Scrolls with page */
     width: 100%;
-    z-index: 10;
 }
-
-/* Removed header::before for full transparency */
 
 header h1 {
     font-family: 'Georgia', serif;
@@ -64,9 +47,9 @@ header h1 {
 /* Main Layout */
 main {
     max-width: 1200px;
-    margin: 60px auto 20px; /* Space for fixed header */
+    margin: 20px auto; /* Adjusted for non-fixed header */
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* Two-column grid */
     gap: 20px;
 }
 
@@ -219,7 +202,7 @@ select:hover, select:focus {
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
-        margin: 50px auto 10px;
+        margin: 20px auto;
     }
 
     .controls {
