@@ -144,38 +144,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                console.log("Ergast API response:", data);
+                console.log("Ergast API full response:", data);
                 const races = data.MRData.RaceTable.Races;
                 if (races && races.length > 0) {
-                    let f1Html = `<h2>Top 5 Upcoming F1 Races</h2>`;
-                    const currentDate = new Date();
-                    const upcomingRaces = races
-                        .filter(race => new Date(race.date + 'T' + race.time) > currentDate)
-                        .slice(0, 5);
-                    if (upcomingRaces.length > 0) {
-                        upcomingRaces.forEach(race => {
-                            const raceDate = new Date(race.date + 'T' + race.time).toLocaleString();
-                            f1Html += `
-                                <div class="f1-item">
-                                    <p><strong>${race.raceName}</strong></p>
-                                    <p>${race.Circuit.circuitName}</p>
-                                    <p>${raceDate}</p>
-                                </div>
-                            `;
-                        });
-                    } else {
-                        f1Html = `<h2>Recent F1 Races</h2>`;
-                        races.slice(-5).reverse().forEach(race => {
-                            const raceDate = new Date(race.date + 'T' + race.time).toLocaleString();
-                            f1Html += `
-                                <div class="f1-item">
-                                    <p><strong>${race.raceName}</strong></p>
-                                    <p>${race.Circuit.circuitName}</p>
-                                    <p>${raceDate}</p>
-                                </div>
-                            `;
-                        });
-                    }
+                    let f1Html = `<h2>F1 2025 Schedule</h2>`;
+                    races.slice(0, 5).forEach(race => { // First 5 races of 2025
+                        const raceDate = new Date(race.date + 'T' + race.time).toLocaleString();
+                        f1Html += `
+                            <div class="f1-item">
+                                <p><strong>${race.raceName}</strong></p>
+                                <p>${race.Circuit.circuitName}</p>
+                                <p>${raceDate}</p>
+                            </div>
+                        `;
+                    });
                     f1Content.innerHTML = f1Html;
                 } else {
                     console.log("No races found for 2025 season");
