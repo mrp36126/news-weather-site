@@ -17,6 +17,10 @@
             "destination": "http://ergast.com/api/f1/:path*"
         },
         {
+            "source": "/ufc/:path*",
+            "destination": "https://ufc-data1.p.rapidapi.com/:path*"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
