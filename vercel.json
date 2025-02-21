@@ -13,6 +13,10 @@
             "destination": "https://api.opencagedata.com/geocode/v1/:path*"
         },
         {
+            "source": "/f1/:path*",
+            "destination": "http://ergast.com/api/f1/:path*"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
