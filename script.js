@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newsCategory = document.getElementById("news-category");
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
-    const newsApiKey = "cd0036d802097242c095659ca9f8873b"; // Your GNews API key
+    const newsApiKey = "cd0036d802097242c095659ca9f8873b";
 
     console.log("DOM loaded, initializing...");
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             const city = data.results[0].components.city || data.results[0].components.town || "Unknown";
                             console.log("City detected:", city);
                             fetchWeatherForecast(city);
-                            fetchNews(newsCountry.value, newsCategory.value);
+                            fetchNews(newsCountry.value, newsCategory.value); // Uses "za" by default
                         } else {
                             console.log("No location results, using defaults");
                             fetchDefaultWeather();
@@ -132,6 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function fetchDefaultNews() {
         console.log("Fetching default news");
-        fetchNews(newsCountry.value, newsCategory.value);
+        fetchNews(newsCountry.value, newsCategory.value); // Uses "za" by default
     }
 });
