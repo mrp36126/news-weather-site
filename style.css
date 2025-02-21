@@ -50,7 +50,7 @@ main {
     margin: 20px auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto; /* Two rows */
+    grid-template-rows: auto auto;
     gap: 20px;
 }
 
@@ -93,7 +93,7 @@ main {
     background: #fff url('Breaking.jpg') no-repeat center center;
     background-size: cover;
     grid-column: 2 / 3;
-    grid-row: 1 / 3; /* Spans both rows */
+    grid-row: 1 / 3;
 }
 
 #news.card::before {
@@ -115,7 +115,7 @@ main {
 
 /* F1 Card */
 #f1.card {
-    background: #fff url('Breaking.jpg') no-repeat center center; /* Reusing Breaking.jpg, can change if desired */
+    background: #fff url('F1Background.jpg') no-repeat center center; /* New F1 image */
     background-size: cover;
     grid-column: 1 / 2;
     grid-row: 2 / 3;
@@ -236,13 +236,13 @@ select:hover, select:focus {
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto; /* Three rows on mobile */
+        grid-template-rows: auto auto auto;
         margin: 20px auto;
     }
 
     #news.card {
         grid-column: 1 / 2;
-        grid-row: 2 / 3; /* Adjust for mobile stacking */
+        grid-row: 2 / 3;
     }
 
     #f1.card {
