@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
             .then(response => {
                 console.log("UFC fetch response status:", response.status);
-                console.log("UFC fetch response headers:", response.headers);
+                console.log("UFC fetch response headers:", Array.from(response.headers.entries()));
                 if (!response.ok) {
                     return response.text().then(text => {
                         throw new Error(`HTTP error! Status: ${response.status}, Response: ${text}`);
@@ -203,11 +203,11 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(data => {
                 console.log("UFC API raw response:", JSON.stringify(data, null, 2));
-                const events = data?.results || data || []; // Adjust based on actual structure
+                const events = data?.results || data || [];
                 console.log("Parsed events array:", events);
                 if (events.length > 0) {
                     let ufcHtml = `<h2>Recent UFC Events</h2>`;
-                    events.slice(0, 5).forEach(event => {
+                    events.slice(-5).reverse().forEach(event => { // Last 5 events, reversed for recency
                         const eventDate = new Date(event.event_date).toLocaleString();
                         ufcHtml += `
                             <div class="ufc-item">
