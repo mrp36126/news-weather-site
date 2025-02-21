@@ -7,9 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const newsCategory = document.getElementById("news-category");
     const f1Section = document.getElementById("f1");
     const f1Content = document.getElementById("f1-content");
+    const ufcSection = document.getElementById("ufc");
+    const ufcContent = document.getElementById("ufc-content");
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
+    const ufcApiKey = "f6767171c1msh811c2fc0a336696p18e722jsnf98c73cc140f";
 
     console.log("DOM loaded, initializing...");
 
@@ -27,11 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             fetchWeatherForecast(city);
                             fetchNews(newsCountry.value, newsCategory.value);
                             fetchF1Races();
+                            fetchUFCEvents();
                         } else {
                             console.log("No location results, using defaults");
                             fetchDefaultWeather();
                             fetchDefaultNews();
                             fetchDefaultF1();
+                            fetchDefaultUFC();
                         }
                     })
                     .catch(error => {
@@ -39,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         fetchDefaultWeather();
                         fetchDefaultNews();
                         fetchDefaultF1();
+                        fetchDefaultUFC();
                     });
             },
             (error) => {
@@ -47,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetchDefaultWeather();
                 fetchDefaultNews();
                 fetchDefaultF1();
+                fetchDefaultUFC();
             }
         );
     } else {
@@ -55,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchDefaultWeather();
         fetchDefaultNews();
         fetchDefaultF1();
+        fetchDefaultUFC();
     }
 
     newsCountry.addEventListener("change", () => {
@@ -138,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         f1Content.innerHTML = '<div class="spinner"></div>';
         fetch(apiUrl)
             .then(response => {
-                console.log("Fetch response status:", response.status);
+                console.log("F1 fetch response status:", response.status);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
@@ -172,6 +180,51 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+    function fetchUFCEvents() {
+        const apiUrl = `/ufc/events`;
+        console.log("Fetching UFC events with URL:", apiUrl);
+        ufcContent.innerHTML = '<div class="spinner"></div>';
+        fetch(apiUrl, {
+            headers: {
+                "X-RapidAPI-Key": ufcApiKey,
+                "X-RapidAPI-Host": "ufc-data1.p.rapidapi.com"
+            }
+        })
+            .then(response => {
+                console.log("UFC fetch response status:", response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("UFC API raw response:", JSON.stringify(data, null, 2));
+                const events = data || []; // Adjust based on actual response structure
+                console.log("Parsed events array:", events);
+                if (events.length > 0) {
+                    let ufcHtml = `<h2>Recent UFC Events</h2>`;
+                    events.slice(0, 5).forEach(event => {
+                        const eventDate = new Date(event.event_date).toLocaleString();
+                        ufcHtml += `
+                            <div class="ufc-item">
+                                <p><strong>${event.event_name || 'Unnamed Event'}</strong></p>
+                                <p>${event.event_location || 'TBD'}</p>
+                                <p>${eventDate}</p>
+                            </div>
+                        `;
+                    });
+                    ufcContent.innerHTML = ufcHtml;
+                } else {
+                    console.log("No events found in response");
+                    ufcContent.innerHTML = "<p>No UFC event data available.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching UFC events:", error.message);
+                ufcContent.innerHTML = `<p>Failed to load UFC events: ${error.message}</p>`;
+            });
+    }
+
     function fetchDefaultWeather() {
         console.log("Fetching default weather");
         fetchWeatherForecast("Johannesburg");
@@ -185,5 +238,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function fetchDefaultF1() {
         console.log("Fetching default F1 races");
         fetchF1Races();
+    }
+
+    function fetchDefaultUFC() {
+        console.log("Fetching default UFC events");
+        fetchUFCEvents();
     }
 });
