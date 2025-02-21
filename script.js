@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const newsContent = document.getElementById("news-content");
     const newsCountry = document.getElementById("news-country");
     const newsCategory = document.getElementById("news-category");
+    const f1Section = document.getElementById("f1");
+    const f1Content = document.getElementById("f1-content");
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
@@ -23,17 +25,20 @@ document.addEventListener("DOMContentLoaded", () => {
                             const city = data.results[0].components.city || data.results[0].components.town || "Unknown";
                             console.log("City detected:", city);
                             fetchWeatherForecast(city);
-                            fetchNews(newsCountry.value, newsCategory.value); // Uses "za" by default
+                            fetchNews(newsCountry.value, newsCategory.value);
+                            fetchF1Races();
                         } else {
                             console.log("No location results, using defaults");
                             fetchDefaultWeather();
                             fetchDefaultNews();
+                            fetchDefaultF1();
                         }
                     })
                     .catch(error => {
                         console.error("Error fetching location:", error);
                         fetchDefaultWeather();
                         fetchDefaultNews();
+                        fetchDefaultF1();
                     });
             },
             (error) => {
@@ -41,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 weatherContent.innerHTML = "<p>Location access denied. Using default.</p>";
                 fetchDefaultWeather();
                 fetchDefaultNews();
+                fetchDefaultF1();
             }
         );
     } else {
@@ -48,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         weatherContent.innerHTML = "<p>Geolocation not supported. Using default.</p>";
         fetchDefaultWeather();
         fetchDefaultNews();
+        fetchDefaultF1();
     }
 
     newsCountry.addEventListener("change", () => {
@@ -125,6 +132,62 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+    function fetchF1Races() {
+        const apiUrl = `/f1/2025.json`;
+        console.log("Fetching F1 races with URL:", apiUrl);
+        f1Content.innerHTML = '<div class="spinner"></div>';
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Ergast API response:", data);
+                const races = data.MRData.RaceTable.Races;
+                if (races && races.length > 0) {
+                    let f1Html = `<h2>Top 5 Upcoming F1 Races</h2>`;
+                    const currentDate = new Date();
+                    const upcomingRaces = races
+                        .filter(race => new Date(race.date + 'T' + race.time) > currentDate)
+                        .slice(0, 5);
+                    if (upcomingRaces.length > 0) {
+                        upcomingRaces.forEach(race => {
+                            const raceDate = new Date(race.date + 'T' + race.time).toLocaleString();
+                            f1Html += `
+                                <div class="f1-item">
+                                    <p><strong>${race.raceName}</strong></p>
+                                    <p>${race.Circuit.circuitName}</p>
+                                    <p>${raceDate}</p>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        f1Html = `<h2>Recent F1 Races</h2>`;
+                        races.slice(-5).reverse().forEach(race => {
+                            const raceDate = new Date(race.date + 'T' + race.time).toLocaleString();
+                            f1Html += `
+                                <div class="f1-item">
+                                    <p><strong>${race.raceName}</strong></p>
+                                    <p>${race.Circuit.circuitName}</p>
+                                    <p>${raceDate}</p>
+                                </div>
+                            `;
+                        });
+                    }
+                    f1Content.innerHTML = f1Html;
+                } else {
+                    console.log("No races found for 2025 season");
+                    f1Content.innerHTML = "<p>No F1 race data available.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching F1 races:", error.message);
+                f1Content.innerHTML = `<p>Failed to load F1 races: ${error.message}</p>`;
+            });
+    }
+
     function fetchDefaultWeather() {
         console.log("Fetching default weather");
         fetchWeatherForecast("Johannesburg");
@@ -132,6 +195,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function fetchDefaultNews() {
         console.log("Fetching default news");
-        fetchNews(newsCountry.value, newsCategory.value); // Uses "za" by default
+        fetchNews(newsCountry.value, newsCategory.value);
+    }
+
+    function fetchDefaultF1() {
+        console.log("Fetching default F1 races");
+        fetchF1Races();
     }
 });
