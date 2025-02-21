@@ -6,81 +6,68 @@
 }
 
 body {
-    font-family: 'Poppins', Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: url('Road3.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #333;
     line-height: 1.6;
-    padding: 20px;
-}
-
-/* Header */
-header {
-    background: url('Road3.jpg') no-repeat center center;
-    background-size: cover;
     position: relative;
-    padding: 15px 0; /* Slightly more padding for balance */
-    text-align: center;
 }
 
-header::before {
+body::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)); /* Gradient overlay */
-    z-index: 1;
+    background: rgba(255, 255, 255, 0.5); /* Light overlay for readability */
+    z-index: -1;
 }
 
-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
+/* Header */
+header {
+    background: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 3px; /* Thin accent line */
-    background: #ff4500; /* Orange-red accent (adjustable) */
-    z-index: 2;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    font-family: 'Times New Roman', serif;
-    font-size: 2.8rem; /* Slightly larger for impact */
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
     font-weight: bold;
+    color: #000000;
     margin: 0;
-    line-height: 1.2;
-    color: #ffffff;
-    position: relative;
-    z-index: 2;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
 }
 
 /* Main Layout */
 main {
-    max-width: 1200px;
-    margin: 2rem auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    max-width: 800px; /* Narrower like The Intercept */
+    margin: 60px auto 20px; /* Space for fixed header */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* Card Styling */
 .card {
     background: #ffffff;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
 }
 
-/* Weather Card with Background */
+/* Weather Card */
 #weather.card {
-    background: url('Earth.jpg') no-repeat center center;
+    background: #fff url('Earth.jpg') no-repeat center center;
     background-size: cover;
-    position: relative;
 }
 
 #weather.card::before {
@@ -91,7 +78,7 @@ main {
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 0.7);
-    border-radius: 12px;
+    border-radius: 8px;
     z-index: 1;
 }
 
@@ -100,11 +87,10 @@ main {
     z-index: 2;
 }
 
-/* News Card with Background */
+/* News Card */
 #news.card {
-    background: url('Breaking.jpg') no-repeat center center;
+    background: #fff url('Breaking.jpg') no-repeat center center;
     background-size: cover;
-    position: relative;
 }
 
 #news.card::before {
@@ -115,7 +101,7 @@ main {
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 0.7);
-    border-radius: 12px;
+    border-radius: 8px;
     z-index: 1;
 }
 
@@ -124,37 +110,23 @@ main {
     z-index: 2;
 }
 
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-
 .card h2 {
+    font-family: 'Georgia', serif;
     font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-    padding-bottom: 0.5rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-#weather.card h2 {
+    font-weight: bold;
     color: #333;
-}
-
-#news.card h2 {
-    color: #333;
+    margin-bottom: 15px;
 }
 
 /* Weather and News Content */
-#weather-content p {
+#weather-content p, #news-content p {
     color: #333;
     font-size: 1.1rem;
-    margin: 0.75rem 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 10px 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-#weather-content p strong {
+#weather-content p strong, #news-content p strong {
     color: #333;
     font-weight: 600;
 }
@@ -164,18 +136,6 @@ main {
     height: 30px;
     vertical-align: middle;
     margin-left: 5px;
-}
-
-#news-content p {
-    color: #333;
-    font-size: 1.1rem;
-    margin: 0.75rem 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-#news-content p strong {
-    color: #333;
-    font-weight: 600;
 }
 
 #news-content a {
@@ -219,37 +179,36 @@ main {
 /* Controls (Dropdowns) */
 .controls {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 select {
-    padding: 0.75rem;
+    padding: 10px;
     font-size: 1rem;
-    border: 2px solid #4a4a4a;
-    border-radius: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     background: #f8f8f8;
     color: #333;
     cursor: pointer;
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition: border-color 0.3s ease;
     flex: 1;
 }
 
 select:hover, select:focus {
-    border-color: #1a1a1a;
-    background: #ffffff;
+    border-color: #333;
     outline: none;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     main {
-        grid-template-columns: 1fr;
+        margin: 50px auto 10px;
     }
 
     .controls {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 5px;
     }
 
     .news-thumb {
@@ -258,6 +217,6 @@ select:hover, select:focus {
     }
 
     header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
 }
