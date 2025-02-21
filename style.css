@@ -48,10 +48,10 @@ header h1 {
 
 /* Main Layout */
 main {
-    max-width: 800px; /* Narrower like The Intercept */
+    max-width: 1200px;
     margin: 60px auto 20px; /* Space for fixed header */
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two-column grid restored */
     gap: 20px;
 }
 
@@ -203,6 +203,7 @@ select:hover, select:focus {
 /* Responsive Design */
 @media (max-width: 768px) {
     main {
+        grid-template-columns: 1fr; /* Stack on mobile */
         margin: 50px auto 10px;
     }
 
