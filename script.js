@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const f1Content = document.getElementById("f1-content");
     const ufcSection = document.getElementById("ufc");
     const ufcContent = document.getElementById("ufc-content");
+    const aiSection = document.getElementById("ai-apps"); // Added
+    const aiContent = document.getElementById("ai-content"); // Added
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
@@ -31,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             fetchNews(newsCountry.value, newsCategory.value);
                             fetchF1Races();
                             fetchUFCEvents();
+                            // AI content is static, no fetch needed
                         } else {
                             console.log("No location results, using defaults");
                             fetchDefaultWeather();
@@ -207,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("Parsed events array:", events);
                 if (events.length > 0) {
                     let ufcHtml = `<h2>Recent UFC Events</h2>`;
-                    events.slice(-5).reverse().forEach(event => { // Last 5 events, reversed for recency
+                    events.slice(-5).reverse().forEach(event => {
                         const eventDate = new Date(event.event_date).toLocaleString();
                         ufcHtml += `
                             <div class="ufc-item">
