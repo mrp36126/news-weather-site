@@ -50,34 +50,64 @@ header h1 {
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Main Layout */
-main {
-    max-width: 1200px;
-    margin: 20px auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 20px;
+/* Tabs Navigation */
+.tabs {
+    display: flex;
+    justify-content: center;
+    background: #f8f8f8;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-/* Card Styling */
-.card {
+.tab {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0 5px;
+    border-radius: 5px 5px 0 0;
+}
+
+.tab:hover {
+    background-color: #e0e0e0;
+    color: #1a1a1a;
+}
+
+.tab.active {
+    background-color: #ffffff;
+    color: #ff6f61;
+    border-bottom: 2px solid #ff6f61;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    padding: 20px;
     background: #ffffff;
     border-radius: 8px;
-    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
+    margin: 20px auto;
+    max-width: 1200px;
 }
 
-/* Weather Card */
-#weather.card {
+.tab-content.active {
+    display: block;
+}
+
+/* Card Styling (for individual sections) */
+#weather.tab-content {
     background: #fff url('Earth.jpg') no-repeat center center;
     background-size: cover;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
 }
 
-#weather.card::before {
+#weather.tab-content::before {
     content: '';
     position: absolute;
     top: 0;
@@ -89,20 +119,17 @@ main {
     z-index: 1;
 }
 
-#weather.card > * {
+#weather.tab-content > * {
     position: relative;
     z-index: 2;
 }
 
-/* News Card */
-#news.card {
+#news.tab-content {
     background: #fff url('Breaking.jpg') no-repeat center center;
     background-size: cover;
-    grid-column: 2 / 3;
-    grid-row: 1 / 3;
 }
 
-#news.card::before {
+#news.tab-content::before {
     content: '';
     position: absolute;
     top: 0;
@@ -114,20 +141,17 @@ main {
     z-index: 1;
 }
 
-#news.card > * {
+#news.tab-content > * {
     position: relative;
     z-index: 2;
 }
 
-/* F1 Card */
-#f1.card {
+#f1.tab-content {
     background: #fff url('F1Background.jpg') no-repeat center center;
     background-size: cover;
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
 }
 
-#f1.card::before {
+#f1.tab-content::before {
     content: '';
     position: absolute;
     top: 0;
@@ -139,20 +163,17 @@ main {
     z-index: 1;
 }
 
-#f1.card > * {
+#f1.tab-content > * {
     position: relative;
     z-index: 2;
 }
 
-/* UFC Card */
-#ufc.card {
+#ufc.tab-content {
     background: #fff url('UFCBackground.jpg') no-repeat center center;
     background-size: cover;
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
 }
 
-#ufc.card::before {
+#ufc.tab-content::before {
     content: '';
     position: absolute;
     top: 0;
@@ -164,22 +185,19 @@ main {
     z-index: 1;
 }
 
-#ufc.card > * {
+#ufc.tab-content > * {
     position: relative;
     z-index: 2;
 }
 
-/* AI Apps Card */
-#ai-apps.card {
+#ai-apps.tab-content {
     background: #fff url('AIBackground.jpg') no-repeat center center;
     background-size: cover;
-    grid-column: 2 / 3;
-    grid-row: 3 / 4;
     overflow-y: auto;
     max-height: 400px;
 }
 
-#ai-apps.card::before {
+#ai-apps.tab-content::before {
     content: '';
     position: absolute;
     top: 0;
@@ -191,7 +209,7 @@ main {
     z-index: 1;
 }
 
-#ai-apps.card > * {
+#ai-apps.tab-content > * {
     position: relative;
     z-index: 2;
 }
@@ -313,46 +331,20 @@ select:hover, select:focus {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    main {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto auto;
-        margin: 20px auto;
-    }
-
-    #news.card {
-        grid-column: 1 / 2;
-        grid-row: 2 / 3;
-    }
-
-    #f1.card {
-        grid-column: 1 / 2;
-        grid-row: 3 / 4;
-    }
-
-    #ufc.card {
-        grid-column: 1 / 2;
-        grid-row: 4 / 5;
-    }
-
-    #ai-apps.card {
-        grid-column: 1 / 2;
-        grid-row: 5 / 6;
-        max-height: none;
-    }
-
-    .controls {
+    .tabs {
         flex-direction: column;
-        gap: 5px;
+        padding: 5px 0;
     }
 
-    .news-thumb {
-        width: 60px;
-        height: 60px;
+    .tab {
+        padding: 8px 15px;
+        margin: 2px 0;
+        border-radius: 5px;
     }
 
-    .ai-icon {
-        width: 32px;
-        height: 32px;
+    .tab-content {
+        margin: 10px auto;
+        padding: 15px;
     }
 
     header h1 {
@@ -367,5 +359,15 @@ select:hover, select:focus {
     .letter:hover {
         -webkit-text-stroke: 0.8px #ff6f61;
         text-stroke: 0.8px #ff6f61;
+    }
+
+    .ai-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .news-thumb {
+        width: 60px;
+        height: 60px;
     }
 }
