@@ -101,29 +101,50 @@ header h1 {
     display: block;
 }
 
-/* Card Styling (for individual sections) */
-#weather.tab-content {
-    background: #fff url('Earth.jpg') no-repeat center center;
-    background-size: cover;
+/* Weather Container and Tiles */
+.weather-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
 }
 
-#weather.tab-content::before {
+.weather-tile {
+    background: #fff url('Earth.jpg') no-repeat center center;
+    background-size: cover;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-tile::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7); /* Semi-transparent overlay like current site */
     z-index: 1;
 }
 
-#weather.tab-content > * {
+.weather-content {
     position: relative;
     z-index: 2;
+    padding: 15px;
+    color: #333;
+    font-size: 1.1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+.weather-content p strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* News Tab */
 #news.tab-content {
     background: #fff url('Breaking.jpg') no-repeat center center;
     background-size: cover;
@@ -146,6 +167,7 @@ header h1 {
     z-index: 2;
 }
 
+/* F1 Tab */
 #f1.tab-content {
     background: #fff url('F1Background.jpg') no-repeat center center;
     background-size: cover;
@@ -168,6 +190,7 @@ header h1 {
     z-index: 2;
 }
 
+/* UFC Tab */
 #ufc.tab-content {
     background: #fff url('UFCBackground.jpg') no-repeat center center;
     background-size: cover;
@@ -190,6 +213,7 @@ header h1 {
     z-index: 2;
 }
 
+/* AI Apps Tab */
 #ai-apps.tab-content {
     background: #fff url('AIBackground.jpg') no-repeat center center;
     background-size: cover;
@@ -342,9 +366,13 @@ select:hover, select:focus {
         border-radius: 5px;
     }
 
-    .tab-content {
-        margin: 10px auto;
-        padding: 15px;
+    .weather-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .weather-tile {
+        height: 250px;
     }
 
     header h1 {
