@@ -32,13 +32,16 @@ header h1 {
 }
 
 .letter {
-    color: #ffffff; /* Default color */
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-    transition: color 0.3s ease; /* Smooth color transition */
+    color: #000000; /* Black fill */
+    -webkit-text-stroke: 1px #ffffff; /* White outline by default */
+    text-stroke: 1px #ffffff; /* Fallback for non-Webkit browsers */
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); /* Strong shadow for contrast */
+    transition: -webkit-text-stroke-color 0.3s ease, text-stroke-color 0.3s ease; /* Smooth outline transition */
 }
 
 .letter:hover {
-    color: #ff6f61; /* Coral color on hover, adjust as desired */
+    -webkit-text-stroke: 1px #ff6f61; /* Coral outline on hover */
+    text-stroke: 1px #ff6f61; /* Fallback */
 }
 
 /* Animation Keyframes */
@@ -57,7 +60,7 @@ main {
     gap: 20px;
 }
 
-/* Card Styling (unchanged for brevity) */
+/* Card Styling */
 .card {
     background: #ffffff;
     border-radius: 8px;
@@ -354,5 +357,15 @@ select:hover, select:focus {
 
     header h1 {
         font-size: 2rem;
+    }
+
+    .letter {
+        -webkit-text-stroke: 0.8px #ffffff; /* Slightly thinner outline on mobile */
+        text-stroke: 0.8px #ffffff;
+    }
+
+    .letter:hover {
+        -webkit-text-stroke: 0.8px #ff6f61;
+        text-stroke: 0.8px #ff6f61;
     }
 }
