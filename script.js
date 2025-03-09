@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const weatherSection = document.getElementById("weather");
-    const weatherContent = document.getElementById("weather-content");
+    const weatherContent = document.querySelectorAll('.weather-content');
     const newsSection = document.getElementById("news");
     const newsContent = document.getElementById("news-content");
     const newsCountry = document.getElementById("news-country");
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             (error) => {
                 console.error("Geolocation error:", error);
-                weatherContent.innerHTML = "<p>Location access denied. Using default.</p>";
+                weatherContent.forEach(wc => wc.innerHTML = "<p>Location access denied. Using default.</p>");
                 fetchDefaultWeather();
                 fetchDefaultNews();
                 fetchDefaultF1();
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     } else {
         console.log("Geolocation not supported");
-        weatherContent.innerHTML = "<p>Geolocation not supported. Using default.</p>";
+        weatherContent.forEach(wc => wc.innerHTML = "<p>Geolocation not supported. Using default.</p>");
         fetchDefaultWeather();
         fetchDefaultNews();
         fetchDefaultF1();
@@ -119,31 +119,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function fetchWeatherForecast(city) {
-        const apiUrl = `/weather/forecast?q=${city}&units=metric&appid=${weatherApiKey}`;
-        console.log("Fetching weather for:", city);
-        weatherContent.innerHTML = '<div class="spinner"></div>';
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.cod === "200") {
-                    let forecastHtml = `<p><strong>Location:</strong> ${data.city.name}, ${data.city.country}</p>`;
-                    const dailyData = data.list.filter((_, index) => index % 8 === 0).slice(0, 3);
-                    dailyData.forEach(day => {
-                        const date = new Date(day.dt * 1000).toLocaleDateString();
-                        forecastHtml += `
-                            <p><strong>${date}:</strong> ${day.main.temp}°C, ${day.weather[0].description}
-                            <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" alt="${day.weather[0].description}" class="weather-icon"></p>
-                        `;
-                    });
-                    weatherContent.innerHTML = forecastHtml;
-                } else {
-                    weatherContent.innerHTML = "<p>Weather data not available.</p>";
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching forecast:", error);
-                weatherContent.innerHTML = "<p>Failed to load forecast.</p>";
-            });
+        const cities = ['Pretoria', 'Vereeniging', 'Brakpan', 'Hermanus'];
+        weatherContent.forEach((wc, index) => {
+            const targetCity = cities[index];
+            const apiUrl = `/weather/forecast?q=${targetCity}&units=metric&appid=${weatherApiKey}`;
+            console.log(`Fetching weather for: ${targetCity}`);
+            wc.innerHTML = '<div class="spinner"></div>';
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === "200") {
+                        let forecastHtml = `<p><strong>Location:</strong> ${data.city.name}, ${data.city.country}</p>`;
+                        const dailyData = data.list.filter((_, index) => index % 8 === 0).slice(0, 3);
+                        dailyData.forEach(day => {
+                            const date = new Date(day.dt * 1000).toLocaleDateString();
+                            forecastHtml += `
+                                <p><strong>${date}:</strong> ${day.main.temp}°C, ${day.weather[0].description}
+                                <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" alt="${day.weather[0].description}" class="weather-icon"></p>
+                            `;
+                        });
+                        wc.innerHTML = forecastHtml;
+                    } else {
+                        wc.innerHTML = "<p>Weather data not available.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error fetching forecast for ${targetCity}:`, error);
+                    wc.innerHTML = "<p>Failed to load forecast.</p>";
+                });
+        });
     }
 
     function fetchNews(country, category) {
@@ -273,8 +277,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function fetchDefaultWeather() {
-        console.log("Fetching default weather");
-        fetchWeatherForecast("Johannesburg");
+        console.log("Fetching default weather for all cities");
+        fetchWeatherForecast("Johannesburg"); // Fallback, but we'll use specific cities
     }
 
     function fetchDefaultNews() {
