@@ -16,6 +16,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
     const ufcApiKey = "f6767171c1msh811c2fc0a336696p18e722jsnf98c73cc140f";
 
+    // Tab switching logic
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding content
+            const tabId = tab.getAttribute('data-tab');
+            tab.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+
+            // Trigger content load for the active tab
+            if (tabId === 'weather') fetchDefaultWeather();
+            else if (tabId === 'news') fetchDefaultNews();
+            else if (tabId === 'f1') fetchDefaultF1();
+            else if (tabId === 'ufc') fetchDefaultUFC();
+        });
+    });
+
+    // Set default active tab (Weather)
+    tabs[0].click();
+
     // Mouseover outline color effect for header letters
     const letters = document.querySelectorAll('.letter');
     const outlineColors = ['#ff6f61', '#6b5b95', '#88b04b', '#f7cac9', '#92a8d1']; // Sample color palette
