@@ -16,21 +16,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
     const ufcApiKey = "f6767171c1msh811c2fc0a336696p18e722jsnf98c73cc140f";
 
-    // Mouseover color effect for header letters
+    // Mouseover outline color effect for header letters
     const letters = document.querySelectorAll('.letter');
-    const colors = ['#ff6f61', '#6b5b95', '#88b04b', '#f7cac9', '#92a8d1']; // Sample color palette
+    const outlineColors = ['#ff6f61', '#6b5b95', '#88b04b', '#f7cac9', '#92a8d1']; // Sample color palette
 
     letters.forEach(letter => {
         letter.addEventListener('mouseover', () => {
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            letter.style.color = randomColor;
+            const randomColor = outlineColors[Math.floor(Math.random() * outlineColors.length)];
+            letter.style.webkitTextStroke = `1px ${randomColor}`;
+            letter.style.textStroke = `1px ${randomColor}`;
         });
         letter.addEventListener('mouseout', () => {
-            letter.style.color = '#ffffff'; // Reset to default
+            letter.style.webkitTextStroke = '1px #ffffff'; // Reset to default white outline
+            letter.style.textStroke = '1px #ffffff';
         });
     });
 
-    // Existing geolocation and fetch logic (unchanged for brevity)
+    // Existing geolocation and fetch logic
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
