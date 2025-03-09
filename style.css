@@ -26,10 +26,19 @@ header h1 {
     font-family: 'Georgia', serif;
     font-size: 2.5rem;
     font-weight: bold;
-    color: #ffffff;
     margin: 0;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    display: inline-flex; /* Flex to keep letters inline */
     animation: slideFadeIn 1.5s ease-out forwards;
+}
+
+.letter {
+    color: #ffffff; /* Default color */
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.letter:hover {
+    color: #ff6f61; /* Coral color on hover, adjust as desired */
 }
 
 /* Animation Keyframes */
@@ -48,7 +57,7 @@ main {
     gap: 20px;
 }
 
-/* Card Styling */
+/* Card Styling (unchanged for brevity) */
 .card {
     background: #ffffff;
     border-radius: 8px;
@@ -163,8 +172,8 @@ main {
     background-size: cover;
     grid-column: 2 / 3;
     grid-row: 3 / 4;
-    overflow-y: auto; /* Allow scrolling if content overflows */
-    max-height: 400px; /* Limit height to match other cards */
+    overflow-y: auto;
+    max-height: 400px;
 }
 
 #ai-apps.card::before {
@@ -196,7 +205,7 @@ main {
 #weather-content p, #news-content p, #f1-content p, #ufc-content p, #ai-content p {
     color: #333;
     font-size: 1.1rem;
-    margin: 5px 0; /* Reduced margin for tighter spacing */
+    margin: 5px 0;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -207,7 +216,7 @@ main {
 
 #ai-content em {
     font-style: italic;
-    color: #555; /* Slightly lighter for emphasis */
+    color: #555;
 }
 
 .weather-icon {
@@ -218,13 +227,23 @@ main {
 }
 
 .news-item, .f1-item, .ufc-item, .ai-item {
-    margin-bottom: 20px; /* Increased for separation */
+    margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee; /* Subtle divider */
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: flex-start;
 }
 
 .ai-item:last-child {
-    border-bottom: none; /* Remove divider from last item */
+    border-bottom: none;
+}
+
+.ai-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 8px;
+    object-fit: contain;
 }
 
 #news-content a, #ai-content a {
@@ -315,7 +334,7 @@ select:hover, select:focus {
     #ai-apps.card {
         grid-column: 1 / 2;
         grid-row: 5 / 6;
-        max-height: none; /* Allow full height on mobile */
+        max-height: none;
     }
 
     .controls {
@@ -326,6 +345,11 @@ select:hover, select:focus {
     .news-thumb {
         width: 60px;
         height: 60px;
+    }
+
+    .ai-icon {
+        width: 32px;
+        height: 32px;
     }
 
     header h1 {
