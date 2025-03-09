@@ -44,7 +44,7 @@ main {
     margin: 20px auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto auto; /* Added a third row */
+    grid-template-rows: auto auto auto;
     gap: 20px;
 }
 
@@ -134,7 +134,7 @@ main {
 
 /* UFC Card */
 #ufc.card {
-    background: #fff url('UFCBackground.jpg') no-repeat center center; /* Assuming you’ll add a background */
+    background: #fff url('UFCBackground.jpg') no-repeat center center;
     background-size: cover;
     grid-column: 1 / 2;
     grid-row: 3 / 4;
@@ -159,10 +159,12 @@ main {
 
 /* AI Apps Card */
 #ai-apps.card {
-    background: #fff url('AIBackground.jpg') no-repeat center center; /* Add your own AI-themed image */
+    background: #fff url('AIBackground.jpg') no-repeat center center;
     background-size: cover;
     grid-column: 2 / 3;
     grid-row: 3 / 4;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    max-height: 400px; /* Limit height to match other cards */
 }
 
 #ai-apps.card::before {
@@ -194,13 +196,18 @@ main {
 #weather-content p, #news-content p, #f1-content p, #ufc-content p, #ai-content p {
     color: #333;
     font-size: 1.1rem;
-    margin: 10px 0;
+    margin: 5px 0; /* Reduced margin for tighter spacing */
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 #weather-content p strong, #news-content p strong, #f1-content p strong, #ufc-content p strong, #ai-content p strong {
     color: #333;
     font-weight: 600;
+}
+
+#ai-content em {
+    font-style: italic;
+    color: #555; /* Slightly lighter for emphasis */
 }
 
 .weather-icon {
@@ -211,7 +218,13 @@ main {
 }
 
 .news-item, .f1-item, .ufc-item, .ai-item {
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Increased for separation */
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee; /* Subtle divider */
+}
+
+.ai-item:last-child {
+    border-bottom: none; /* Remove divider from last item */
 }
 
 #news-content a, #ai-content a {
@@ -280,7 +293,7 @@ select:hover, select:focus {
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto auto; /* Adjusted for five sections */
+        grid-template-rows: auto auto auto auto auto;
         margin: 20px auto;
     }
 
@@ -302,6 +315,7 @@ select:hover, select:focus {
     #ai-apps.card {
         grid-column: 1 / 2;
         grid-row: 5 / 6;
+        max-height: none; /* Allow full height on mobile */
     }
 
     .controls {
