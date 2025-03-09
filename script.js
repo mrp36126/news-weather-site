@@ -9,15 +9,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const f1Content = document.getElementById("f1-content");
     const ufcSection = document.getElementById("ufc");
     const ufcContent = document.getElementById("ufc-content");
-    const aiSection = document.getElementById("ai-apps"); // Added
-    const aiContent = document.getElementById("ai-content"); // Added
+    const aiSection = document.getElementById("ai-apps");
+    const aiContent = document.getElementById("ai-content");
     const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
     const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
     const ufcApiKey = "f6767171c1msh811c2fc0a336696p18e722jsnf98c73cc140f";
 
-    console.log("DOM loaded, initializing...");
+    // Mouseover color effect for header letters
+    const letters = document.querySelectorAll('.letter');
+    const colors = ['#ff6f61', '#6b5b95', '#88b04b', '#f7cac9', '#92a8d1']; // Sample color palette
 
+    letters.forEach(letter => {
+        letter.addEventListener('mouseover', () => {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            letter.style.color = randomColor;
+        });
+        letter.addEventListener('mouseout', () => {
+            letter.style.color = '#ffffff'; // Reset to default
+        });
+    });
+
+    // Existing geolocation and fetch logic (unchanged for brevity)
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -33,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             fetchNews(newsCountry.value, newsCategory.value);
                             fetchF1Races();
                             fetchUFCEvents();
-                            // AI content is static, no fetch needed
                         } else {
                             console.log("No location results, using defaults");
                             fetchDefaultWeather();
