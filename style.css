@@ -34,14 +34,8 @@ header h1 {
 
 /* Animation Keyframes */
 @keyframes slideFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Main Layout */
@@ -50,7 +44,7 @@ main {
     margin: 20px auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto; /* Added a third row */
     gap: 20px;
 }
 
@@ -115,7 +109,7 @@ main {
 
 /* F1 Card */
 #f1.card {
-    background: #fff url('F1Background.jpg') no-repeat center center; /* New F1 image */
+    background: #fff url('F1Background.jpg') no-repeat center center;
     background-size: cover;
     grid-column: 1 / 2;
     grid-row: 2 / 3;
@@ -138,6 +132,56 @@ main {
     z-index: 2;
 }
 
+/* UFC Card */
+#ufc.card {
+    background: #fff url('UFCBackground.jpg') no-repeat center center; /* Assuming you’ll add a background */
+    background-size: cover;
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}
+
+#ufc.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    z-index: 1;
+}
+
+#ufc.card > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* AI Apps Card */
+#ai-apps.card {
+    background: #fff url('AIBackground.jpg') no-repeat center center; /* Add your own AI-themed image */
+    background-size: cover;
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+}
+
+#ai-apps.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    z-index: 1;
+}
+
+#ai-apps.card > * {
+    position: relative;
+    z-index: 2;
+}
+
 .card h2 {
     font-family: 'Georgia', serif;
     font-size: 1.75rem;
@@ -146,15 +190,15 @@ main {
     margin-bottom: 15px;
 }
 
-/* Weather, News, and F1 Content */
-#weather-content p, #news-content p, #f1-content p {
+/* Content Styling */
+#weather-content p, #news-content p, #f1-content p, #ufc-content p, #ai-content p {
     color: #333;
     font-size: 1.1rem;
     margin: 10px 0;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-#weather-content p strong, #news-content p strong, #f1-content p strong {
+#weather-content p strong, #news-content p strong, #f1-content p strong, #ufc-content p strong, #ai-content p strong {
     color: #333;
     font-weight: 600;
 }
@@ -166,17 +210,17 @@ main {
     margin-left: 5px;
 }
 
-.news-item, .f1-item {
+.news-item, .f1-item, .ufc-item, .ai-item {
     margin-bottom: 15px;
 }
 
-#news-content a {
+#news-content a, #ai-content a {
     color: #333;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-#news-content a:hover {
+#news-content a:hover, #ai-content a:hover {
     color: #1a1a1a;
     text-decoration: underline;
 }
@@ -236,7 +280,7 @@ select:hover, select:focus {
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto auto auto auto auto; /* Adjusted for five sections */
         margin: 20px auto;
     }
 
@@ -248,6 +292,16 @@ select:hover, select:focus {
     #f1.card {
         grid-column: 1 / 2;
         grid-row: 3 / 4;
+    }
+
+    #ufc.card {
+        grid-column: 1 / 2;
+        grid-row: 4 / 5;
+    }
+
+    #ai-apps.card {
+        grid-column: 1 / 2;
+        grid-row: 5 / 6;
     }
 
     .controls {
