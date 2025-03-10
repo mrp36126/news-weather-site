@@ -1,20 +1,50 @@
 {
-    "rewrites": [
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.{js,css}",
+      "use": "@vercel/static"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/news/:path*",
+      "destination": "https://gnews.io/api/v4/:path*"
+    },
+    {
+      "source": "/f1/:path*",
+      "destination": "http://ergast.com/api/f1/:path*"
+    },
+    {
+      "source": "/ufc/:path*",
+      "destination": "https://ufc-data1.p.rapidapi.com/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/ufc/:path*",
+      "headers": [
         {
-            "source": "/news/:path*",
-            "destination": "https://gnews.io/api/v4/:path*"
+          "key": "X-RapidAPI-Key",
+          "value": "f6767171c1msh811c2fc0a336696p18e722jsnf98c73cc140f"
         },
         {
-            "source": "/f1/:path*",
-            "destination": "http://ergast.com/api/f1/:path*"
-        },
-        {
-            "source": "/ufc/:path*",
-            "destination": "https://ufc-data1.p.rapidapi.com/:path*"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/index.html"
+          "key": "X-RapidAPI-Host",
+          "value": "ufc-data1.p.rapidapi.com"
         }
-    ]
+      ]
+    }
+  ],
+  "env": {
+    "NEWS_API_KEY": "cd0036d802097242c095659ca9f8873b",
+    "UFC_API_KEY": "f6767171c1msh811c2fc0a336696p18e722jsnf98c73cc140f"
+  }
 }
