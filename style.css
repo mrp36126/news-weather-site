@@ -115,6 +115,7 @@ header h1 {
     position: relative;
     height: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable scrolling if content overflows */
 }
 
 .weather-tile::before {
@@ -173,13 +174,14 @@ header h1 {
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    height: 400px; /* Increased height to accommodate more content and weather */
+    height: 450px; /* Increased height to show more content */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable scrolling if content overflows */
 }
 
 .racing-tile::before {
     content: '';
-    position: absolute;
+    position: full;
     top: 0;
     left: 0;
     width: 100%;
@@ -443,7 +445,7 @@ select:hover, select:focus {
     }
 
     .racing-tile {
-        height: 350px; /* Adjusted height for mobile */
+        height: 400px; /* Adjusted height for mobile */
     }
 
     header h1 {
