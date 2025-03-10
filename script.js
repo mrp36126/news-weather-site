@@ -11,10 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ufcContent = document.getElementById("ufc-content");
     const aiSection = document.getElementById("ai-apps");
     const aiContent = document.getElementById("ai-content");
-    const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
-    const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
-    const ufcApiKey = "f6767171c1msh811c2fc0a336696p18e722jsnf98c73cc140f";
 
     // Tab switching logic
     const tabs = document.querySelectorAll('.tab');
@@ -58,55 +55,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Existing geolocation and fetch logic
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                console.log("Geolocation success:", latitude, longitude);
-                fetch(`/geocode/json?q=${latitude}+${longitude}&key=${openCageApiKey}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.results.length > 0) {
-                            const city = data.results[0].components.city || data.results[0].components.town || "Unknown";
-                            console.log("City detected:", city);
-                            fetchRacingInfo(city);
-                            fetchNews(newsCountry.value, newsCategory.value);
-                            fetchF1Races();
-                            fetchUFCEvents();
-                        } else {
-                            console.log("No location results, using defaults");
-                            fetchDefaultRacing();
-                            fetchDefaultNews();
-                            fetchDefaultF1();
-                            fetchDefaultUFC();
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error fetching location:", error);
-                        fetchDefaultRacing();
-                        fetchDefaultNews();
-                        fetchDefaultF1();
-                        fetchDefaultUFC();
-                    });
-            },
-            (error) => {
-                console.error("Geolocation error:", error);
-                racingContent.forEach(rc => rc.innerHTML = "<p>Location access denied. Using default.</p>");
-                fetchDefaultRacing();
-                fetchDefaultNews();
-                fetchDefaultF1();
-                fetchDefaultUFC();
-            }
-        );
-    } else {
-        console.log("Geolocation not supported");
-        racingContent.forEach(rc => rc.innerHTML = "<p>Geolocation not supported. Using default.</p>");
-        fetchDefaultRacing();
-        fetchDefaultNews();
-        fetchDefaultF1();
-        fetchDefaultUFC();
-    }
+    // Removed geolocation logic since Racing tab is static
+    fetchDefaultRacing();
+    fetchDefaultNews();
+    fetchDefaultF1();
+    fetchDefaultUFC();
 
     newsCountry.addEventListener("change", () => {
         console.log("Country dropdown changed to:", newsCountry.value);
@@ -123,8 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         racingContent.forEach((rc, index) => {
             const targetCity = cities[index];
             console.log(`Displaying racing info for: ${targetCity}`);
-            // Placeholder logic - content is static for now
-            // Future enhancement: Fetch dynamic racing data if available
+            // Content is static for now
         });
     }
 
@@ -209,13 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const apiUrl = `/ufc/events`;
         console.log("Fetching UFC events with URL:", apiUrl);
         ufcContent.innerHTML = '<div class="spinner"></div>';
-        fetch(apiUrl, {
-            method: 'GET',
-            headers: {
-                "X-RapidAPI-Key": ufcApiKey,
-                "X-RapidAPI-Host": "ufc-data1.p.rapidapi.com"
-            }
-        })
+        fetch(apiUrl)
             .then(response => {
                 console.log("UFC fetch response status:", response.status);
                 console.log("UFC fetch response headers:", Array.from(response.headers.entries()));
@@ -256,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function fetchDefaultRacing() {
         console.log("Displaying default racing info for all cities");
-        fetchRacingInfo("Pretoria"); // Fallback, but content is static
+        fetchRacingInfo("Pretoria");
     }
 
     function fetchDefaultNews() {
