@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: url('https://raw.githubusercontent.com/mrp36126/news-weather-site/main/Road3.jpg') no-repeat center center fixed;
+    background: url('Road3.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #333;
     line-height: 1.6;
@@ -108,7 +108,7 @@ header h1 {
 }
 
 .weather-tile {
-    background: url('https://raw.githubusercontent.com/mrp36126/news-weather-site/main/Earth.jpg') no-repeat center center;
+    background: url('Earth.jpg') no-repeat center center;
     background-size: cover;
     border-radius: 8px;
     overflow: hidden;
@@ -151,7 +151,7 @@ header h1 {
 }
 
 .racing-tile {
-    background: url('https://raw.githubusercontent.com/mrp36126/news-weather-site/main/RaceTrack.jpg') no-repeat center center; /* Changed to a racing-themed background */
+    background: url('RaceTrack.jpg') no-repeat center center;
     background-size: cover;
     border-radius: 8px;
     overflow: hidden;
@@ -199,7 +199,8 @@ header h1 {
 
 /* News Tab */
 #news.tab-content {
-    background: transparent; /* Remove white background */
+    background: transparent !important; /* Ensure transparency to show body background */
+    position: relative;
 }
 
 #news.tab-content::before {
@@ -387,7 +388,7 @@ header h1 {
 
 select {
     padding: 10px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     background: rgba(248, 248, 248, 0.9);
