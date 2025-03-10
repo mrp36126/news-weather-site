@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: url('Road3.jpg') no-repeat center center fixed;
+    background: url('https://raw.githubusercontent.com/mrp36126/news-weather-site/main/Road3.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #333;
     line-height: 1.6;
@@ -108,7 +108,7 @@ header h1 {
 }
 
 .weather-tile {
-    background: url('Earth.jpg') no-repeat center center;
+    background: url('https://raw.githubusercontent.com/mrp36126/news-weather-site/main/Earth.jpg') no-repeat center center;
     background-size: cover;
     border-radius: 8px;
     overflow: hidden;
@@ -151,7 +151,7 @@ header h1 {
 }
 
 .racing-tile {
-    background: url('RaceTrack.jpg') no-repeat center center; /* Changed to a racing-themed background */
+    background: url('https://raw.githubusercontent.com/mrp36126/news-weather-site/main/RaceTrack.jpg') no-repeat center center; /* Changed to a racing-themed background */
     background-size: cover;
     border-radius: 8px;
     overflow: hidden;
