@@ -99,6 +99,49 @@ header h1 {
     display: block;
 }
 
+/* Weather Container and Tiles */
+.weather-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.weather-tile {
+    background: url('Earth.jpg') no-repeat center center;
+    background-size: cover;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    height: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-tile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3); /* Slightly transparent overlay for readability */
+    z-index: 1;
+}
+
+.weather-content {
+    position: relative;
+    z-index: 2;
+    padding: 15px;
+    color: #333;
+    font-size: 1.1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Stronger shadow for contrast */
+}
+
+.weather-content p strong {
+    color: #333;
+    font-weight: 600;
+}
+
 /* Racing Container and Tiles */
 .racing-container {
     display: grid;
@@ -113,7 +156,7 @@ header h1 {
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    height: 400px; /* Increased height to accommodate more content */
+    height: 400px; /* Increased height to accommodate more content and weather */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -372,9 +415,13 @@ select:hover, select:focus {
         border-radius: 5px;
     }
 
-    .racing-container {
+    .weather-container, .racing-container {
         grid-template-columns: 1fr;
         gap: 15px;
+    }
+
+    .weather-tile {
+        height: 250px;
     }
 
     .racing-tile {
