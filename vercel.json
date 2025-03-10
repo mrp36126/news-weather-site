@@ -1,16 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/weather/:path*",
-            "destination": "https://api.openweathermap.org/data/2.5/:path*"
-        },
-        {
             "source": "/news/:path*",
             "destination": "https://gnews.io/api/v4/:path*"
-        },
-        {
-            "source": "/geocode/:path*",
-            "destination": "https://api.opencagedata.com/geocode/v1/:path*"
         },
         {
             "source": "/f1/:path*",
