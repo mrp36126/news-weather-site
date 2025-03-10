@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: url('images/Road3.jpg') no-repeat center center fixed;
+    background: url('Road3.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #333;
     line-height: 1.6;
@@ -108,7 +108,7 @@ header h1 {
 }
 
 .weather-tile {
-    background: url('images/Earth.jpg') no-repeat center center;
+    background: url('Earth.jpg') no-repeat center center;
     background-size: cover;
     border-radius: 8px;
     overflow: hidden;
@@ -151,7 +151,7 @@ header h1 {
 }
 
 .racing-tile {
-    background: url('images/RaceTrack.jpg') no-repeat center center; /* Changed to a racing-themed background */
+    background: url('RaceTrack.jpg') no-repeat center center; /* Changed to a racing-themed background */
     background-size: cover;
     border-radius: 8px;
     overflow: hidden;
