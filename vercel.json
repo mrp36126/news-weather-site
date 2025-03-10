@@ -8,6 +8,10 @@
     {
       "src": "*.{js,css}",
       "use": "@vercel/static"
+    },
+    {
+      "src": "*.{jpg,png}",
+      "use": "@vercel/static"
     }
   ],
   "rewrites": [
