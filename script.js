@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const weatherSection = document.getElementById("weather");
+    const weatherContent = document.querySelectorAll('.weather-content');
     const racingSection = document.getElementById("racing");
     const racingContent = document.querySelectorAll('.racing-content');
     const newsSection = document.getElementById("news");
@@ -11,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const ufcContent = document.getElementById("ufc-content");
     const aiSection = document.getElementById("ai-apps");
     const aiContent = document.getElementById("ai-content");
+    const weatherApiKey = "0c47cd3fae85aaa9ae678aeda7dce305";
+    const openCageApiKey = "bc0eaeb72bd84c7e8b5c9084fd979fba";
     const newsApiKey = "cd0036d802097242c095659ca9f8873b";
 
     // Tab switching logic
@@ -29,14 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById(tabId).classList.add('active');
 
             // Trigger content load for the active tab
-            if (tabId === 'racing') fetchDefaultRacing();
+            if (tabId === 'weather') fetchDefaultWeather();
+            else if (tabId === 'racing') fetchDefaultRacing();
             else if (tabId === 'news') fetchDefaultNews();
             else if (tabId === 'f1') fetchDefaultF1();
             else if (tabId === 'ufc') fetchDefaultUFC();
         });
     });
 
-    // Set default active tab (Racing)
+    // Set default active tab (Weather)
     tabs[0].click();
 
     // Mouseover outline color effect for header letters
@@ -55,11 +60,62 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Removed geolocation logic since Racing tab is static
-    fetchDefaultRacing();
-    fetchDefaultNews();
-    fetchDefaultF1();
-    fetchDefaultUFC();
+    // Geolocation and initial data fetch
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                console.log("Geolocation success:", latitude, longitude);
+                fetch(`/geocode/json?q=${latitude}+${longitude}&key=${openCageApiKey}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.results.length > 0) {
+                            const city = data.results[0].components.city || data.results[0].components.town || "Unknown";
+                            console.log("City detected:", city);
+                            fetchWeatherForecast(city);
+                            fetchRacingWeather(city);
+                            fetchNews(newsCountry.value, newsCategory.value);
+                            fetchF1Races();
+                            fetchUFCEvents();
+                        } else {
+                            console.log("No location results, using defaults");
+                            fetchDefaultWeather();
+                            fetchDefaultRacing();
+                            fetchDefaultNews();
+                            fetchDefaultF1();
+                            fetchDefaultUFC();
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching location:", error);
+                        fetchDefaultWeather();
+                        fetchDefaultRacing();
+                        fetchDefaultNews();
+                        fetchDefaultF1();
+                        fetchDefaultUFC();
+                    });
+            },
+            (error) => {
+                console.error("Geolocation error:", error);
+                weatherContent.forEach(wc => wc.innerHTML = "<p>Location access denied. Using default.</p>");
+                racingContent.forEach(rc => rc.innerHTML += "<p>Location access denied. Using default weather.</p>");
+                fetchDefaultWeather();
+                fetchDefaultRacing();
+                fetchDefaultNews();
+                fetchDefaultF1();
+                fetchDefaultUFC();
+            }
+        );
+    } else {
+        console.log("Geolocation not supported");
+        weatherContent.forEach(wc => wc.innerHTML = "<p>Geolocation not supported. Using default.</p>");
+        racingContent.forEach(rc => rc.innerHTML += "<p>Geolocation not supported. Using default weather.</p>");
+        fetchDefaultWeather();
+        fetchDefaultRacing();
+        fetchDefaultNews();
+        fetchDefaultF1();
+        fetchDefaultUFC();
+    }
 
     newsCountry.addEventListener("change", () => {
         console.log("Country dropdown changed to:", newsCountry.value);
@@ -71,12 +127,60 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchNews(newsCountry.value, newsCategory.value);
     });
 
-    function fetchRacingInfo(city) {
+    function fetchWeatherForecast(city) {
+        const cities = ['Pretoria', 'Vereeniging', 'Brakpan', 'Hermanus'];
+        weatherContent.forEach((wc, index) => {
+            const targetCity = cities[index];
+            const apiUrl = `/weather/forecast?q=${targetCity}&units=metric&appid=${weatherApiKey}`;
+            console.log(`Fetching weather for: ${targetCity}`);
+            wc.innerHTML = '<div class="spinner"></div>';
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === "200") {
+                        let forecastHtml = `<p><strong>Location:</strong> ${data.city.name}, ${data.city.country}</p>`;
+                        const dailyData = data.list.filter((_, index) => index % 8 === 0).slice(0, 3);
+                        dailyData.forEach(day => {
+                            const date = new Date(day.dt * 1000).toLocaleDateString();
+                            forecastHtml += `
+                                <p><strong>${date}:</strong> ${day.main.temp}°C, ${day.weather[0].description}
+                                <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" alt="${day.weather[0].description}" class="weather-icon"></p>
+                            `;
+                        });
+                        wc.innerHTML = forecastHtml;
+                    } else {
+                        wc.innerHTML = "<p>Weather data not available.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error fetching forecast for ${targetCity}:`, error);
+                    wc.innerHTML = "<p>Failed to load forecast.</p>";
+                });
+        });
+    }
+
+    function fetchRacingWeather(city) {
         const cities = ['Pretoria', 'Vereeniging', 'Brakpan', 'Hermanus'];
         racingContent.forEach((rc, index) => {
             const targetCity = cities[index];
-            console.log(`Displaying racing info for: ${targetCity}`);
-            // Content is static for now
+            const apiUrl = `/weather/weather?q=${targetCity}&units=metric&appid=${weatherApiKey}`;
+            console.log(`Fetching weather for racing in: ${targetCity}`);
+            const weatherElement = rc.querySelector('p:last-child'); // Target the "Current Weather" paragraph
+            weatherElement.innerHTML = '<div class="spinner"></div>';
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        weatherElement.innerHTML = `<strong>Current Weather:</strong> ${data.main.temp}°C, ${data.weather[0].description}
+                            <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}.png" alt="${data.weather[0].description}" class="weather-icon">`;
+                    } else {
+                        weatherElement.innerHTML = "<strong>Current Weather:</strong> Data not available.";
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error fetching weather for ${targetCity}:`, error);
+                    weatherElement.innerHTML = "<strong>Current Weather:</strong> Failed to load.";
+                });
         });
     }
 
@@ -200,9 +304,14 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
+    function fetchDefaultWeather() {
+        console.log("Fetching default weather for all cities");
+        fetchWeatherForecast("Johannesburg"); // Fallback city
+    }
+
     function fetchDefaultRacing() {
-        console.log("Displaying default racing info for all cities");
-        fetchRacingInfo("Pretoria");
+        console.log("Fetching default racing info and weather for all cities");
+        fetchRacingWeather("Pretoria"); // Fetch weather for racing locations
     }
 
     function fetchDefaultNews() {
