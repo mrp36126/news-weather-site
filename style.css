@@ -1,395 +1,52 @@
-/* Reset and Base Styles */
-* {
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: #f4f4f4;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background: url('Road3.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Header */
-header {
-    background: transparent;
-    padding: 15px 20px;
+.container {
+    width: 80%;
+    margin: 20px auto;
     text-align: center;
-    position: relative;
-    width: 100%;
 }
 
-header h1 {
-    font-family: 'Georgia', serif;
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin: 0;
-    display: inline-flex; /* Flex to keep letters inline */
-    animation: slideFadeIn 1.5s ease-out forwards;
-}
-
-.letter {
-    color: #000000; /* Black fill */
-    -webkit-text-stroke: 1px #ffffff; /* White outline by default */
-    text-stroke: 1px #ffffff; /* Fallback for non-Webkit browsers */
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); /* Strong shadow for contrast */
-    transition: -webkit-text-stroke-color 0.3s ease, text-stroke-color 0.3s ease; /* Smooth outline transition */
-}
-
-.letter:hover {
-    -webkit-text-stroke: 1px #ff6f61; /* Coral outline on hover */
-    text-stroke: 1px #ff6f61; /* Fallback */
-}
-
-/* Animation Keyframes */
-@keyframes slideFadeIn {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Tabs Navigation */
-.tabs {
+nav {
     display: flex;
     justify-content: center;
-    background: rgba(248, 248, 248, 0.9); /* Slightly transparent background for tabs */
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.tab {
+.tab-btn {
     padding: 10px 20px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    background: none;
+    background: #333;
+    color: white;
     border: none;
     cursor: pointer;
-    color: #333;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin: 0 5px;
-    border-radius: 5px 5px 0 0;
 }
 
-.tab:hover {
-    background-color: rgba(224, 224, 224, 0.7);
-    color: #1a1a1a;
+.tab-btn.active {
+    background: #007bff;
 }
 
-.tab.active {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #ff6f61;
-    border-bottom: 2px solid #ff6f61;
-}
-
-/* Tab Content */
 .tab-content {
     display: none;
-    padding: 20px;
-    background: transparent; /* Fully transparent to show the road background */
-    margin: 20px auto;
-    max-width: 1200px;
 }
 
 .tab-content.active {
     display: block;
 }
 
-/* Weather Container and Tiles */
-.weather-container {
+.grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
 }
 
-.weather-tile {
-    background: url('Earth.jpg') no-repeat center center;
-    background-size: cover;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    height: 300px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.weather-tile::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Slightly transparent overlay for readability */
-    z-index: 1;
-}
-
-.weather-content {
-    position: relative;
-    z-index: 2;
+.card {
+    background: white;
     padding: 15px;
-    color: #333;
-    font-size: 1.1rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Stronger shadow for contrast */
-}
-
-.weather-content p strong {
-    color: #333;
-    font-weight: 600;
-}
-
-/* News Tab */
-#news.tab-content {
-    background: transparent; /* Remove white background */
-}
-
-#news.tab-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Slightly transparent overlay */
     border-radius: 8px;
-    z-index: 1;
-}
-
-#news.tab-content > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* F1 Tab */
-#f1.tab-content {
-    background: transparent; /* Remove white background */
-}
-
-#f1.tab-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Slightly transparent overlay */
-    border-radius: 8px;
-    z-index: 1;
-}
-
-#f1.tab-content > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* UFC Tab */
-#ufc.tab-content {
-    background: transparent; /* Remove white background */
-}
-
-#ufc.tab-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Slightly transparent overlay */
-    border-radius: 8px;
-    z-index: 1;
-}
-
-#ufc.tab-content > * {
-    position: relative;
-    z-index: 2;
-}
-
-/* AI Apps Tab */
-#ai-apps.tab-content {
-    background: transparent; /* Remove white background */
-    overflow-y: auto;
-    max-height: 400px;
-}
-
-#ai-apps.tab-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.3); /* Slightly transparent overlay */
-    border-radius: 8px;
-    z-index: 1;
-}
-
-#ai-apps.tab-content > * {
-    position: relative;
-    z-index: 2;
-}
-
-.card h2 {
-    font-family: 'Georgia', serif;
-    font-size: 1.75rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-/* Content Styling */
-#weather-content p, #news-content p, #f1-content p, #ufc-content p, #ai-content p {
-    color: #333;
-    font-size: 1.1rem;
-    margin: 5px 0;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); /* Stronger shadow for contrast */
-}
-
-#weather-content p strong, #news-content p strong, #f1-content p strong, #ufc-content p strong, #ai-content p strong {
-    color: #333;
-    font-weight: 600;
-}
-
-#ai-content em {
-    font-style: italic;
-    color: #555;
-}
-
-.weather-icon {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    margin-left: 5px;
-}
-
-.news-item, .f1-item, .ufc-item, .ai-item {
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(238, 238, 238, 0.5); /* Semi-transparent border */
-    display: flex;
-    align-items: flex-start;
-}
-
-.ai-item:last-child {
-    border-bottom: none;
-}
-
-.ai-icon {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    border-radius: 8px;
-    object-fit: contain;
-}
-
-#news-content a, #ai-content a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-#news-content a:hover, #ai-content a:hover {
-    color: #1a1a1a;
-    text-decoration: underline;
-}
-
-.news-thumb {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-right: 10px;
-    float: left;
-}
-
-/* Spinner */
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(208, 208, 208, 0.7);
-    border-top: 4px solid #4a4a4a;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-    position: relative;
-    z-index: 2;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Controls (Dropdowns) */
-.controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: rgba(248, 248, 248, 0.9);
-    color: #333;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-    flex: 1;
-}
-
-select:hover, select:focus {
-    border-color: #333;
-    outline: none;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .tabs {
-        flex-direction: column;
-        padding: 5px 0;
-    }
-
-    .tab {
-        padding: 8px 15px;
-        margin: 2px 0;
-        border-radius: 5px;
-    }
-
-    .weather-container {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .weather-tile {
-        height: 250px;
-    }
-
-    header h1 {
-        font-size: 2rem;
-    }
-
-    .letter {
-        -webkit-text-stroke: 0.8px #ffffff; /* Slightly thinner outline on mobile */
-        text-stroke: 0.8px #ffffff;
-    }
-
-    .letter:hover {
-        -webkit-text-stroke: 0.8px #ff6f61;
-        text-stroke: 0.8px #ff6f61;
-    }
-
-    .ai-icon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .news-thumb {
-        width: 60px;
-        height: 60px;
-    }
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
