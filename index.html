@@ -40,6 +40,7 @@
         </h1>
     </header>
     <nav class="tabs">
+        <button class="tab" data-tab="weather">Weather</button>
         <button class="tab" data-tab="racing">Racing</button>
         <button class="tab" data-tab="news">News</button>
         <button class="tab" data-tab="f1">F1</button>
@@ -47,8 +48,33 @@
         <button class="tab" data-tab="ai-apps">AI Apps</button>
     </nav>
     <main>
+        <section id="weather" class="tab-content">
+            <h2>Weather Forecast</h2>
+            <div class="weather-container">
+                <div class="weather-tile" data-city="Pretoria">
+                    <div class="weather-content">
+                        <p>Loading Pretoria weather...</p>
+                    </div>
+                </div>
+                <div class="weather-tile" data-city="Vereeniging">
+                    <div class="weather-content">
+                        <p>Loading Vereeniging weather...</p>
+                    </div>
+                </div>
+                <div class="weather-tile" data-city="Brakpan">
+                    <div class="weather-content">
+                        <p>Loading Brakpan weather...</p>
+                    </div>
+                </div>
+                <div class="weather-tile" data-city="Hermanus">
+                    <div class="weather-content">
+                        <p>Loading Hermanus weather...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="racing" class="tab-content">
-            <h2>Racing Highlights</h2>
+            <h2>Racing Highlights & Weather</h2>
             <div class="racing-container">
                 <div class="racing-tile" data-city="Pretoria">
                     <div class="racing-content">
@@ -66,6 +92,7 @@
                             <li>25 October: Nationals</li>
                             <li>8 November: Regionals</li>
                         </ul>
+                        <p><strong>Current Weather:</strong> Loading...</p>
                     </div>
                 </div>
                 <div class="racing-tile" data-city="Vereeniging">
@@ -73,6 +100,7 @@
                         <h3>Vereeniging - TBD</h3>
                         <p><strong>Track Info:</strong> Placeholder for Vereeniging racing events. Stay tuned for updates!</p>
                         <p><strong>Schedule:</strong> Coming soon...</p>
+                        <p><strong>Current Weather:</strong> Loading...</p>
                     </div>
                 </div>
                 <div class="racing-tile" data-city="Brakpan">
@@ -80,6 +108,7 @@
                         <h3>Brakpan - TBD</h3>
                         <p><strong>Track Info:</strong> Placeholder for Brakpan racing events. Stay tuned for updates!</p>
                         <p><strong>Schedule:</strong> Coming soon...</p>
+                        <p><strong>Current Weather:</strong> Loading...</p>
                     </div>
                 </div>
                 <div class="racing-tile" data-city="Hermanus">
@@ -87,6 +116,7 @@
                         <h3>Hermanus - TBD</h3>
                         <p><strong>Track Info:</strong> Placeholder for Hermanus racing events. Stay tuned for updates!</p>
                         <p><strong>Schedule:</strong> Coming soon...</p>
+                        <p><strong>Current Weather:</strong> Loading...</p>
                     </div>
                 </div>
             </div>
