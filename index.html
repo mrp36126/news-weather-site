@@ -3,55 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Dashboard</title>
+    <title>A little bit of everything!</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Georgia&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <nav>
-            <button class="tab-btn active" data-tab="news">News</button>
-            <button class="tab-btn" data-tab="racing">Racing</button>
-            <button class="tab-btn" data-tab="f1">F1</button>
-            <button class="tab-btn" data-tab="ufc">UFC</button>
-        </nav>
-
-        <section id="news" class="tab-content active">
-            <h2>Latest News</h2>
-            <div id="news-container" class="grid"></div>
-        </section>
-
+    <header>
+        <h1>
+            <span class="letter">A</span>
+            <span class="letter"> </span><!-- Space -->
+            <span class="letter">l</span>
+            <span class="letter">i</span>
+            <span class="letter">t</span>
+            <span class="letter">t</span>
+            <span class="letter">l</span>
+            <span class="letter">e</span>
+            <span class="letter"> </span><!-- Space -->
+            <span class="letter">b</span>
+            <span class="letter">i</span>
+            <span class="letter">t</span>
+            <span class="letter"> </span><!-- Space -->
+            <span class="letter">o</span>
+            <span class="letter">f</span>
+            <span class="letter"> </span><!-- Space -->
+            <span class="letter">e</span>
+            <span class="letter">v</span>
+            <span class="letter">e</span>
+            <span class="letter">r</span>
+            <span class="letter">y</span>
+            <span class="letter">t</span>
+            <span class="letter">h</span>
+            <span class="letter">i</span>
+            <span class="letter">n</span>
+            <span class="letter">g</span>
+            <span class="letter">!</span>
+        </h1>
+    </header>
+    <nav class="tabs">
+        <button class="tab" data-tab="racing">Racing</button>
+        <button class="tab" data-tab="news">News</button>
+        <button class="tab" data-tab="f1">F1</button>
+        <button class="tab" data-tab="ufc">UFC</button>
+        <button class="tab" data-tab="ai-apps">AI Apps</button>
+    </nav>
+    <main>
         <section id="racing" class="tab-content">
-            <h2>Racing Events</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Pretoria - Zwartkops Raceway</h3>
-                    <p>Upcoming Races for 2025:</p>
-                    <ul>
-                        <li>1 Feb - Passion for Speed</li>
-                        <li>1 Mar - Regional</li>
-                        <li>5 Apr - Historic Tour</li>
-                        <li>17 May - Regional</li>
-                        <li>21 Jun - Nationals</li>
-                        <li>12 Jul - 500</li>
-                        <li>9 Aug - Historic</li>
-                        <li>25 Oct - Nationals</li>
-                        <li>8 Nov - Regionals</li>
-                    </ul>
+            <h2>Racing Highlights</h2>
+            <div class="racing-container">
+                <div class="racing-tile" data-city="Pretoria">
+                    <div class="racing-content">
+                        <h3>Pretoria - Zwartkops Raceway</h3>
+                        <p><strong>Track Info:</strong> Zwartkops Raceway, a premier motorsport venue near Pretoria, hosts a variety of racing events throughout the year.</p>
+                        <p><strong>2025 Schedule:</strong></p>
+                        <ul>
+                            <li>1 February: Passion for Speed</li>
+                            <li>1 March: Regional</li>
+                            <li>5 April: Historic Tour</li>
+                            <li>17 May: Regional</li>
+                            <li>21 June: Nationals</li>
+                            <li>12 July: 500</li>
+                            <li>9 August: Historic</li>
+                            <li>25 October: Nationals</li>
+                            <li>8 November: Regionals</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="racing-tile" data-city="Vereeniging">
+                    <div class="racing-content">
+                        <h3>Vereeniging - TBD</h3>
+                        <p><strong>Track Info:</strong> Placeholder for Vereeniging racing events. Stay tuned for updates!</p>
+                        <p><strong>Schedule:</strong> Coming soon...</p>
+                    </div>
+                </div>
+                <div class="racing-tile" data-city="Brakpan">
+                    <div class="racing-content">
+                        <h3>Brakpan - TBD</h3>
+                        <p><strong>Track Info:</strong> Placeholder for Brakpan racing events. Stay tuned for updates!</p>
+                        <p><strong>Schedule:</strong> Coming soon...</p>
+                    </div>
+                </div>
+                <div class="racing-tile" data-city="Hermanus">
+                    <div class="racing-content">
+                        <h3>Hermanus - TBD</h3>
+                        <p><strong>Track Info:</strong> Placeholder for Hermanus racing events. Stay tuned for updates!</p>
+                        <p><strong>Schedule:</strong> Coming soon...</p>
+                    </div>
                 </div>
             </div>
         </section>
-
+        <section id="news" class="tab-content">
+            <h2>Latest News</h2>
+            <div class="controls">
+                <select id="news-country">
+                    <option value="us">United States</option>
+                    <option value="gb">United Kingdom</option>
+                    <option value="ca">Canada</option>
+                    <option value="au">Australia</option>
+                    <option value="za" selected>South Africa</option>
+                </select>
+                <select id="news-category">
+                    <option value="general">General</option>
+                    <option value="sports">Sports</option>
+                    <option value="technology">Technology</option>
+                    <option value="business">Business</option>
+                </select>
+            </div>
+            <div id="news-content">
+                <p>Loading news...</p>
+            </div>
+        </section>
         <section id="f1" class="tab-content">
-            <h2>Formula 1 Updates</h2>
-            <div id="f1-container" class="grid"></div>
+            <h2>F1 Schedule</h2>
+            <div id="f1-content">
+                <p>Loading F1 races...</p>
+            </div>
         </section>
-
         <section id="ufc" class="tab-content">
-            <h2>UFC Fight Updates</h2>
-            <div id="ufc-container" class="grid"></div>
+            <h2>UFC Events</h2>
+            <div id="ufc-content">
+                <p>Loading UFC events...</p>
+            </div>
         </section>
-    </div>
-
+        <section id="ai-apps" class="tab-content">
+            <h2>Top AI Apps (March 2025)</h2>
+            <div id="ai-content">
+                <div class="ai-item">
+                    <img src="images/chatgpt-icon.png" alt="ChatGPT Icon" class="ai-icon">
+                    <p><strong>ChatGPT (OpenAI)</strong></p>
+                    <p><em>What it does:</em> A conversational AI for writing, research, coding, and more, powered by advanced models like GPT-4.</p>
+                    <p><em>Why it’s top:</em> Its versatility and massive user base (over 400 million weekly active users) make it a leader.</p>
+                    <p><a href="https://chat.openai.com/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/grok-icon.png" alt="Grok Icon" class="ai-icon">
+                    <p><strong>Grok (xAI)</strong></p>
+                    <p><em>What it does:</em> A chatbot designed to provide helpful, truthful answers with a unique perspective.</p>
+                    <p><em>Why it’s top:</em> Gaining traction for its fresh take on AI assistance, appealing to users seeking alternatives.</p>
+                    <p><a href="https://x.ai/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/midjourney-icon.png" alt="Midjourney Icon" class="ai-icon">
+                    <p><strong>Midjourney</strong></p>
+                    <p><em>What it does:</em> An AI art generator that creates stunning visuals from text prompts, accessible via Discord.</p>
+                    <p><em>Why it’s top:</em> Its creative output and growing community of artists keep it at the forefront of AI creativity.</p>
+                    <p><a href="https://www.midjourney.com/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/deepseek-icon.png" alt="DeepSeek Icon" class="ai-icon">
+                    <p><strong>DeepSeek</strong></p>
+                    <p><em>What it does:</em> An open-source chatbot from a Chinese AI startup, offering high performance at a low cost.</p>
+                    <p><em>Why it’s top:</em> Launched in January 2025, it quickly climbed popularity charts, especially in regions like China.</p>
+                    <p><a href="https://www.deepseek.com/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/gemini-icon.png" alt="Gemini Icon" class="ai-icon">
+                    <p><strong>Gemini (Google)</strong></p>
+                    <p><em>What it does:</em> A multilingual chatbot integrated with Google’s ecosystem, aiding in research and summaries.</p>
+                    <p><em>Why it’s top:</em> Its seamless Android integration and Google’s vast resources make it a strong contender.</p>
+                    <p><a href="https://gemini.google.com/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/copilot-icon.png" alt="Copilot Icon" class="ai-icon">
+                    <p><strong>Copilot (Microsoft)</strong></p>
+                    <p><em>What it does:</em> An AI companion for Microsoft 365 and Edge, assisting with writing, data analysis, and planning.</p>
+                    <p><em>Why it’s top:</em> Its deep integration with widely used productivity tools ensures relevance for professionals.</p>
+                    <p><a href="https://copilot.microsoft.com/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/elevenlabs-icon.png" alt="ElevenLabs Icon" class="ai-icon">
+                    <p><strong>ElevenLabs</strong></p>
+                    <p><em>What it does:</em> An AI voice generator creating realistic speech for various applications.</p>
+                    <p><em>Why it’s top:</em> Its impressive audio quality is driving adoption in media, gaming, and accessibility.</p>
+                    <p><a href="https://elevenlabs.io/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/otter-icon.png" alt="Otter.ai Icon" class="ai-icon">
+                    <p><strong>Otter.ai</strong></p>
+                    <p><em>What it does:</em> Transcribes and summarizes meetings, lectures, and conversations in real time.</p>
+                    <p><em>Why it’s top:</em> A must-have for professionals and students needing efficient note-taking.</p>
+                    <p><a href="https://otter.ai/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/perplexity-icon.png" alt="Perplexity Icon" class="ai-icon">
+                    <p><strong>Perplexity</strong></p>
+                    <p><em>What it does:</em> An AI-powered search engine delivering concise, accurate answers with sources.</p>
+                    <p><em>Why it’s top:</em> Its free access and focus on reliable information make it a go-to for quick research.</p>
+                    <p><a href="https://www.perplexity.ai/" target="_blank">Visit</a></p>
+                </div>
+                <div class="ai-item">
+                    <img src="images/notion-ai-icon.png" alt="Notion AI Icon" class="ai-icon">
+                    <p><strong>Notion AI</strong></p>
+                    <p><em>What it does:</em> Enhances the Notion platform with AI-driven text generation, editing, and knowledge management.</p>
+                    <p><em>Why it’s top:</em> Its integration into a popular productivity tool appeals to teams and individuals.</p>
+                    <p><a href="https://www.notion.so/product/ai" target="_blank">Visit</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
